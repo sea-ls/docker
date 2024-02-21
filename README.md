@@ -7,4 +7,5 @@
 2) Ввести следующие команды по отдельности, вместо \<TOKEN\> вставить ваш токен.
 <br/>
 ```export CR_PAT=<TOKEN>```
+<br/>
 ```echo $CR_PAT | docker login ghcr.io -u sea-ls --password-stdin```
