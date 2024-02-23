@@ -13,6 +13,8 @@ on:
     paths:
       - $SERVICE_NAME
 env:
+  DOCKER_REPO_PASSWORD: ${{ secrets.DOCKER_REPO_PASSWORD }}
+  DOCKER_REPO_USERNAME: ${{ vars.DOCKER_REPO_USERNAME }}
   CI_PROJECT_NAME: ${GITHUB_REPOSITORY#*/}
   IMAGE: ${{ vars.DOCKER_REPO_URL }}${CI_PROJECT_NAME}/${{ inputs.SERVICE_NAME }}:latest
 
@@ -25,10 +27,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - env:
-          DOCKER_REPO_PASSWORD: ${{ secrets.DOCKER_REPO_PASSWORD }}
-          DOCKER_REPO_USERNAME: ${{ vars.DOCKER_REPO_USERNAME }}
-        run: "echo $DOCKER_REPO_PASSWORD | docker login ghcr.io -u $DOCKER_REPO_USERNAME --password-stdin"
+      - run: "echo $DOCKER_REPO_PASSWORD | docker login ghcr.io -u $DOCKER_REPO_USERNAME --password-stdin"
       - run: pwd
       - run: docker build --build-arg DOCKER_REPO_URL --build-arg CI_PROJECT_NAME -t $IMAGE ./init/${{ inputs.DEPENDS_ON }}
       - run: docker push $IMAGE
