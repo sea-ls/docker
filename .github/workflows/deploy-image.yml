@@ -13,7 +13,7 @@ jobs:
     strategy:
       matrix:
         services: [ "${{ inputs.docker-25 }}" ]
-    uses: ./.github/workflows/githubci.yml@main
+    uses: ./.github/workflows/githubci.yml
     with:
       SERVICE_NAME: ${{ matrix.services.SERVICE_NAME }}
       DEPENDS_ON: ${{ matrix.services.DEPENDS_ON }}
