@@ -11,7 +11,7 @@ on:
         type: string
   push:
     paths:
-      - ${{ inputs.SERVICE_NAME }}
+      - $SERVICE_NAME
 env:
   CI_PROJECT_NAME: ${GITHUB_REPOSITORY#*/}
   IMAGE: ${{ vars.DOCKER_REPO_URL }}${CI_PROJECT_NAME}/${{ inputs.SERVICE_NAME }}:latest
