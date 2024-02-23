@@ -9,14 +9,18 @@ on:
       DEPENDS_ON:
         required: true
         type: string
+      DOCKER_REPO_USERNAME:
+        required: true
+        type: string
+      DOCKER_REPO_PASSWORD:
+        required: true
+        type: string
   push:
     paths:
       - $SERVICE_NAME
 env:
   CI_PROJECT_NAME: ${GITHUB_REPOSITORY#*/}
   IMAGE: ${{ vars.DOCKER_REPO_URL }}${CI_PROJECT_NAME}/${{ inputs.SERVICE_NAME }}:latest
-  DOCKER_REPO_PASSWORD: ${{ secrets.DOCKER_REPO_PASSWORD }}
-  DOCKER_REPO_USERNAME: ${{ secrets.DOCKER_REPO_USERNAME }}
 
 jobs:
   build-dependencies:
