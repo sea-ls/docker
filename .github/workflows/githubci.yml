@@ -31,8 +31,8 @@ jobs:
       - run: docker push $IMAGE
 
   build-images:
-    runs-on: [self-hosted]
-    needs: [$DEPENDS_ON]
+    runs-on: [ self-hosted ]
+    needs: [ call-workflow ]
    #   permissions:
    #   contents: read
    #   packages: write
