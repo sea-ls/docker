@@ -9,7 +9,6 @@ on:
 
 jobs:
   call-workflow:
-    runs-on: [ self-hosted ]
     strategy:
       matrix:
         services: [ "${{ inputs.docker-25 }}" ]
