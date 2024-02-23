@@ -25,7 +25,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - run: echo -n $DOCKER_REPO_PASSWORD | docker login -u $DOCKER_REPO_USERNAME --password-stdin $DOCKER_REPO_URL
+      - run: echo -n $DOCKER_REPO_PASSWORD | winpty docker login -u $DOCKER_REPO_USERNAME --password-stdin $DOCKER_REPO_URL
       - run: pwd
       - run: docker build --build-arg DOCKER_REPO_URL --build-arg CI_PROJECT_NAME -t $IMAGE ./init/$SERVICE_NAME
       - run: docker push $IMAGE
@@ -39,7 +39,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - run: echo -n $DOCKER_REPO_PASSWORD | docker login -u $DOCKER_REPO_USERNAME --password-stdin $DOCKER_REPO_URL
+      - run: echo -n $DOCKER_REPO_PASSWORD | winpty docker login -u $DOCKER_REPO_USERNAME --password-stdin $DOCKER_REPO_URL
       - run: pwd
       - run: docker build --build-arg DOCKER_REPO_URL --build-arg CI_PROJECT_NAME -t $IMAGE ./$SERVICE_NAME
       - run: docker push $IMAGE
