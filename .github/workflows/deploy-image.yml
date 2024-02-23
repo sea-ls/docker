@@ -1,0 +1,16 @@
+name: Create and publish a Docker image
+
+on:
+  workflow_dispatch: # or workflow_call
+    services:
+      docker-25:
+        SERVICE_NAME: "docker-25"
+        DEPENDS_ON: "docker--25"
+
+jobs:
+  call-workflow:
+    runs-on: [ self-hosted ]
+    strategy:
+      matrix:
+        services: [ "${{ inputs.docker-25 }}" ]
+    uses: ./.github/workflows/githubci.yml

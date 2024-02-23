@@ -1,0 +1,45 @@
+name: Create and publish a Docker image
+
+on:
+  workflow_call:
+    inputs:
+      SERVICE_NAME:
+        required: true
+        type: string
+      DEPENDS_ON:
+        required: true
+        type: string
+  push:
+    paths:
+      - $SERVICE_NAME
+env:
+  CI_PROJECT_NAME: ${GITHUB_REPOSITORY#*/}
+  IMAGE: ${DOCKER_REPO_URL}${CI_PROJECT_NAME}/${SERVICE_NAME}:latest
+
+jobs:
+  build-dependencies:
+    runs-on: [ self-hosted ]
+    #   permissions:
+    #   contents: read
+    #   packages: write
+
+    steps:
+      - run:
+      - run: echo -n $DOCKER_REPO_PASSWORD | docker login -u $DOCKER_REPO_USERNAME --password-stdin $DOCKER_REPO_URL$CI_PROJECT_NAME
+      - run: pwd
+      - run: docker build --build-arg DOCKER_REPO_URL --build-arg CI_PROJECT_NAME -t $IMAGE ./init/$SERVICE_NAME
+      - run: docker push $IMAGE
+
+  build-images:
+    runs-on: [self-hosted]
+    needs: [$DEPENDS_ON]
+   #   permissions:
+   #   contents: read
+   #   packages: write
+
+    steps:
+      - run:
+      - run: echo -n $DOCKER_REPO_PASSWORD | docker login -u $DOCKER_REPO_USERNAME --password-stdin $DOCKER_REPO_URL$CI_PROJECT_NAME
+      - run: pwd
+      - run: docker build --build-arg DOCKER_REPO_URL --build-arg CI_PROJECT_NAME -t $IMAGE ./$SERVICE_NAME
+      - run: docker push $IMAGE
