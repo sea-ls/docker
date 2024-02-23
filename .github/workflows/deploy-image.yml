@@ -1,4 +1,4 @@
-name: Create and publish a Docker image
+name: Create all jobs
 
 on:
   workflow_dispatch: # or workflow_call
