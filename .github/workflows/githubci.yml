@@ -32,7 +32,7 @@ jobs:
 
   build-images:
     runs-on: [ self-hosted ]
-    needs: [ call-workflow ]
+    needs: [   build-dependencies ]
    #   permissions:
    #   contents: read
    #   packages: write
