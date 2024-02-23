@@ -13,4 +13,4 @@ jobs:
     strategy:
       matrix:
         services: [ "${{ inputs.docker-25 }}" ]
-    uses: ./.github/workflows/githubci.yml
+    uses: .github/workflows/githubci.yml
