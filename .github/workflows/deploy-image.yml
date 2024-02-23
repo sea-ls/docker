@@ -20,6 +20,6 @@ jobs:
     #  DEPENDS_ON: ${{ matrix.services.DEPENDS_ON }}
     #  DOCKER_REPO_USERNAME: $DOCKER_REPO_USERNAME
     #  DOCKER_REPO_PASSWORD: $DOCKER_REPO_PASSWORD
-  runs-on: [ self-hosted ]
-  steps:
-    - run: echo $DOCKER_REPO_PASSWORD
+    runs-on: [ self-hosted ]
+    steps:
+      - run: echo $DOCKER_REPO_PASSWORD
