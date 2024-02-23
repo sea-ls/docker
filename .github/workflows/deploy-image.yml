@@ -8,15 +8,18 @@ on:
         DEPENDS_ON: "docker--25"
 env:
   DOCKER_REPO_PASSWORD: ${{ secrets.DOCKER_REPO_PASSWORD }}
-  DOCKER_REPO_USERNAME: ${{ vars.DOCKER_REPO_USERNAME }}
+  DOCKER_REPO_USERNAME: ${{ secrets.DOCKER_REPO_USERNAME }}
 jobs:
   call-workflow:
-    strategy:
-      matrix:
-        services: [ "${{ inputs.docker-25 }}" ]
-    uses: ./.github/workflows/githubci.yml
-    with:
-      SERVICE_NAME: ${{ matrix.services.SERVICE_NAME }}
-      DEPENDS_ON: ${{ matrix.services.DEPENDS_ON }}
-      DOCKER_REPO_USERNAME: $DOCKER_REPO_USERNAME
-      DOCKER_REPO_PASSWORD: $DOCKER_REPO_PASSWORD
+    #strategy:
+    #  matrix:
+    #    services: [ "${{ inputs.docker-25 }}" ]
+    #uses: ./.github/workflows/githubci.yml
+    #with:
+    #  SERVICE_NAME: ${{ matrix.services.SERVICE_NAME }}
+    #  DEPENDS_ON: ${{ matrix.services.DEPENDS_ON }}
+    #  DOCKER_REPO_USERNAME: $DOCKER_REPO_USERNAME
+    #  DOCKER_REPO_PASSWORD: $DOCKER_REPO_PASSWORD
+  runs-on: [ self-hosted ]
+  steps:
+    - run: echo $DOCKER_REPO_PASSWORD
