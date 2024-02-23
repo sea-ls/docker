@@ -24,7 +24,7 @@ jobs:
     #   packages: write
 
     steps:
-      - run:
+      - uses: actions/checkout@v3
       - run: echo -n $DOCKER_REPO_PASSWORD | docker login -u $DOCKER_REPO_USERNAME --password-stdin $DOCKER_REPO_URL$CI_PROJECT_NAME
       - run: pwd
       - run: docker build --build-arg DOCKER_REPO_URL --build-arg CI_PROJECT_NAME -t $IMAGE ./init/$SERVICE_NAME
@@ -38,7 +38,7 @@ jobs:
    #   packages: write
 
     steps:
-      - run:
+      - uses: actions/checkout@v3
       - run: echo -n $DOCKER_REPO_PASSWORD | docker login -u $DOCKER_REPO_USERNAME --password-stdin $DOCKER_REPO_URL$CI_PROJECT_NAME
       - run: pwd
       - run: docker build --build-arg DOCKER_REPO_URL --build-arg CI_PROJECT_NAME -t $IMAGE ./$SERVICE_NAME
