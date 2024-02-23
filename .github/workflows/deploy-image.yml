@@ -16,5 +16,5 @@ jobs:
     with:
       SERVICE_NAME: ${{ matrix.services.SERVICE_NAME }}
       DEPENDS_ON: ${{ matrix.services.DEPENDS_ON }}
-      DOCKER_REPO_PASSWORD: ${{ secrets.DOCKER_REPO_PASSWORD }}\
+      DOCKER_REPO_PASSWORD: ${{ secrets.DOCKER_REPO_PASSWORD }}
       DOCKER_REPO_USERNAME: ${{ vars.DOCKER_REPO_USERNAME }}
