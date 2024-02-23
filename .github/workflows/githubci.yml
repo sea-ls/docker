@@ -9,6 +9,12 @@ on:
       DEPENDS_ON:
         required: true
         type: string
+      DOCKER_REPO_USERNAME:
+        required: true
+        type: string
+      DOCKER_REPO_PASSWORD:
+        required: true
+        type: string
   push:
     paths:
       - $SERVICE_NAME
