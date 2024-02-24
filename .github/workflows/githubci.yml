@@ -15,8 +15,10 @@ on:
 env:
   DOCKER_REPO_PASSWORD: ${{ secrets.DOCKER_REPO_PASSWORD }}
   DOCKER_REPO_USERNAME: ${{ secrets.DOCKER_REPO_USERNAME }}
-  DOCKER_REPO_URL: ${{ vars.DOCKER_REPO_URL }}
+  DOCKER_REPO_URL_LOGIN: ${{ vars.DOCKER_REPO_URL_LOGIN }}
+  DOCKER_REPO_URL: ${{ vars.  DOCKER_REPO_URL }}
   CI_PROJECT_NAME: ${{ github.event.repository.name }}
+  IMAGE: ${{ vars.DOCKER_REPO_URL }}${{ env.CI_PROJECT_NAME }}/${{ inputs.SERVICE_NAME }}:latest
 
 jobs:
   build-dependencies:
@@ -27,11 +29,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - run: echo $DOCKER_REPO_PASSWORD | docker login $DOCKER_REPO_URL -u $DOCKER_REPO_USERNAME --password-stdin
+      - run: echo $DOCKER_REPO_PASSWORD | docker login $DOCKER_REPO_URL_LOGIN -u $DOCKER_REPO_USERNAME --password-stdin
       - run: echo "${{ inputs.SERVICE_NAME }}"
-      - env:
-          IMAGE: ${{ vars.DOCKER_REPO_URL }}${{ env.CI_PROJECT_NAME }}/${{ inputs.SERVICE_NAME }}:latest
-        run: docker build --build-arg DOCKER_REPO_URL --build-arg CI_PROJECT_NAME -t $IMAGE ./init/${{ inputs.DEPENDS_ON }}
+      - run: docker build --build-arg DOCKER_REPO_URL --build-arg CI_PROJECT_NAME -t $IMAGE ./init/${{ inputs.DEPENDS_ON }}
       - run: docker push $IMAGE
 
   build-images:
@@ -42,7 +42,7 @@ jobs:
    #   packages: write
     steps:
       - uses: actions/checkout@v3
-      - run: echo $DOCKER_REPO_PASSWORD | docker login $DOCKER_REPO_URL -u $DOCKER_REPO_USERNAME --password-stdin
+      - run: echo $DOCKER_REPO_PASSWORD | docker login $DOCKER_REPO_URL_LOGIN -u $DOCKER_REPO_USERNAME --password-stdin
       - run: pwd
       - run: docker build --build-arg DOCKER_REPO_URL --build-arg CI_PROJECT_NAME -t $IMAGE ./${{ inputs.SERVICE_NAME }}
       - run: docker push $IMAGE
