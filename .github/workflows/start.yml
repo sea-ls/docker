@@ -17,7 +17,7 @@ jobs:
       - run: pwd
       - run: ls ./.github/workflows/
       - uses: actions/checkout@v3
-      - run: jsonnet -S --ext-str branch=develop --ext-str need_bkp=false ./.github/workflows/test.jsonnet > generated-config.yml
+      - run: jsonnet -S --ext-str branch=develop --ext-str need_bkp=false ./.github/workflows/test.jsonnet > ./.github/workflows/generated-config.yml
       #- uses: actions/upload-artifact@v3
       #  with:
       #    name: generated-config.yml
