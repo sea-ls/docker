@@ -22,4 +22,4 @@ jobs:
         - self-hosted
       steps:
         - run: jsonnet -S .github/workflows/a.jsonnet > a.yml
-        - uses: ./.github/workflows/a.yml
+        - uses: ./.github/workflows/a.yml@main
