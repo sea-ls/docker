@@ -15,5 +15,5 @@ jobs:
     uses: ./.github/workflows/githubci.yml
     secrets: inherit
     with:
-      SERVICE_NAME: ${{ matrix.services.SERVICE_NAME }}
-      DEPENDS_ON: ${{ matrix.services.DEPENDS_ON }}
+      SERVICE_NAME: ${{ matrix.SERVICE_NAME }}
+      DEPENDS_ON: ${{ matrix.DEPENDS_ON }}
