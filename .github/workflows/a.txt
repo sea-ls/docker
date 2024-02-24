@@ -1,0 +1,19 @@
+name: Create all jobs
+
+on:
+  workflow_dispatch: # or workflow_call
+    services:
+      docker-25:
+        SERVICE_NAME: "docker-25"
+        DEPENDS_ON: "docker--25"
+
+jobs:
+  call-workflow:
+    strategy:
+      matrix:
+        services: [ "${{ inputs.docker-25 }}" ]
+    uses: ./.github/workflows/githubci.yml
+    secrets: inherit
+    with:
+      SERVICE_NAME: ${{ matrix.services.SERVICE_NAME }}
+      DEPENDS_ON: ${{ matrix.services.DEPENDS_ON }}
