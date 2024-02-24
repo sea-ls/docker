@@ -2,7 +2,7 @@ name: Create all jobs
 
 on:
   workflow_dispatch: # or workflow_call
-    services:
+    inputs:
       docker-25:
         SERVICE_NAME: "docker-25"
         DEPENDS_ON: "docker--25"
