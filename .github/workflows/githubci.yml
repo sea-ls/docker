@@ -27,7 +27,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: echo $DOCKER_REPO_PASSWORD | docker login ghcr.io -u $DOCKER_REPO_USERNAME --password-stdin
-      - run: pwd
+      - run: echo ${{ inputs.SERVICE_NAME }}
       - env:
           IMAGE: ${{ vars.DOCKER_REPO_URL }}$CI_PROJECT_NAME/${{ inputs.SERVICE_NAME }}:latest
         run: docker build --build-arg DOCKER_REPO_URL --build-arg CI_PROJECT_NAME -t $IMAGE ./init/${{ inputs.DEPENDS_ON }}
