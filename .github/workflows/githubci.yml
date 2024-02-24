@@ -27,7 +27,7 @@ jobs:
     #   packages: write
     env:
       SERVICE_NAME: ${{ inputs.DEPENDS_ON }}
-      IMAGE: ${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/${{ env.SERVICE_NAME }}:latest
+      IMAGE: ${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/${{ inputs.DEPENDS_ON }}:latest
     steps:
       - uses: actions/checkout@v3
       - run: echo $DOCKER_REPO_PASSWORD | docker login $DOCKER_REPO_URL_LOGIN -u $DOCKER_REPO_USERNAME --password-stdin
@@ -40,7 +40,7 @@ jobs:
     needs: [ build-dependencies ]
     env:
       SERVICE_NAME: ${{ inputs.SERVICE_NAME }}
-      IMAGE: ${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/${{ env.SERVICE_NAME }}:latest
+      IMAGE: ${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/${{ inputs.SERVICE_NAME }}:latest
    #   permissions:
    #   contents: read
    #   packages: write
