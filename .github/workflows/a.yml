@@ -4,7 +4,7 @@
   "DOCKER_REPO_URL": "${{ vars.DOCKER_REPO_URL }}"
   "DOCKER_REPO_URL_LOGIN": "${{ vars.DOCKER_REPO_URL_LOGIN }}"
   "DOCKER_REPO_USERNAME": "${{ secrets.DOCKER_REPO_USERNAME }}"
-"job":
+"jobs":
   "docker--25":
     "env":
       "IMAGE": "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/docker--25:latest"

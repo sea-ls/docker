@@ -21,7 +21,7 @@ local gitlabci = {
         CI_PROJECT_NAME: "${{ github.event.repository.name }}"
     },
 } + {
-job : {
+jobs : {
      [dependency]: {
        "runs-on": [ "self-hosted" ],
        env: {
