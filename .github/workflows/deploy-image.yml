@@ -8,6 +8,8 @@ on:
     #    DEPENDS_ON: "docker--25"
 
 jobs:
+  permissions:
+    workflows: write
   #call-workflow:
   #  strategy:
   #    matrix:
