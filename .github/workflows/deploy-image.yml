@@ -1,11 +1,7 @@
 name: Create all jobs
 
 on:
-  workflow_dispatch: # or workflow_call
-    #inputs:
-    #  docker-25:
-    #    SERVICE_NAME: "docker-25"
-    #    DEPENDS_ON: "docker--25"
+  push:
 
 jobs:
   #call-workflow:
@@ -24,15 +20,15 @@ jobs:
         - uses: actions/checkout@v4
           with:
             token: ${{ secrets.WORKFLOW_TOKEN }}
-        - run: jsonnet -S .github/workflows/a.jsonnet > .github/workflows/a.yml
+        - run: jsonnet -S .github/workflows/github-ci.jsonnet > .github/workflows/generated-config.yml
         #- uses: ./.github/workflows/a.yml@main
         - name: GIT commit and push all changed files
           env:
-            CI_COMMIT_MESSAGE: Continuous Integration Build Artifacts
-            CI_COMMIT_AUTHOR: Continuous Integration
+            CI_COMMIT_MESSAGE: Create workflow from jsonnet
+            CI_COMMIT_AUTHOR: GitHub Runner - RUNNER_NAME
           run: |
             git config --global user.name "${{ env.CI_COMMIT_AUTHOR }}"
             git config --global user.email "osagrigoriy@mail.ru"
-            git add .github/workflows/a.yml
+            git add .github/workflows/generated-config.yml
             git commit -a -m "${{ env.CI_COMMIT_MESSAGE }}"
             git push

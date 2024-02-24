@@ -22,6 +22,38 @@ local gitlabci = {
     },
 } + {
 jobs : {
+     changes: {
+        "runs-on": [ "self-hosted" ],
+        # Required permissions
+        permissions:{
+            "pull-requests": "read"
+        } ,
+        outputs: {
+             [dependency]: "${{ steps.filter.outputs." + dependency + " }}"
+             for dependency in dependencies
+        } + {
+            [service.name]: "${{ steps.filter.outputs." + service.name + " }}"
+            for service in services
+        },
+        steps: [
+            {
+                uses: "dorny/paths-filter@v3",
+                id: "filter",
+                with: {
+                    filters: {
+                        [dependency]:  [
+                            './init/' + dependency + '/**'
+                        ] for dependency in dependencies
+                    } + {
+                        [service.name]:  [
+                            service.name + '/**'
+                        ] for service in services
+                    }
+                },
+            },
+        ],
+     }
+    } + {
      [dependency]: {
        "runs-on": [ "self-hosted" ],
        env: {
