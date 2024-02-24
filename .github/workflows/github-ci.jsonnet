@@ -40,7 +40,7 @@ jobs : {
                 uses: "dorny/paths-filter@v3",
                 id: "filter",
                 with: {
-                    filters: {
+                    filters: "|" + {
                         [dependency]:  [
                             './init/' + dependency + '/**'
                         ] for dependency in dependencies
