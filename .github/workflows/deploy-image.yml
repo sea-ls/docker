@@ -23,3 +23,12 @@ jobs:
       steps:
         - run: jsonnet -S .github/workflows/a.jsonnet > .github/workflows/a.yml
         - uses: ./.github/workflows/a.yml@main
+        - name: GIT commit and push all changed files
+          env:
+            CI_COMMIT_MESSAGE: Continuous Integration Build Artifacts
+            CI_COMMIT_AUTHOR: Continuous Integration
+          run: |
+            git config --global user.name "${{ env.CI_COMMIT_AUTHOR }}"
+            git config --global user.email "osagrigoriy@mail.ru"
+            git commit -a -m "${{ env.CI_COMMIT_MESSAGE }}"
+            git push
