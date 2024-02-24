@@ -6,8 +6,7 @@ on:
     #  docker-25:
     #    SERVICE_NAME: "docker-25"
     #    DEPENDS_ON: "docker--25"
-env:
-  WORKFLOW_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
+
 jobs:
   #call-workflow:
   #  strategy:
@@ -24,7 +23,7 @@ jobs:
       steps:
         - uses: actions/checkout@v4
           with:
-          token: WORKFLOW_TOKEN
+            token: ${{ secrets.WORKFLOW_TOKEN }}
         - run: jsonnet -S .github/workflows/a.jsonnet > .github/workflows/a.yml
         #- uses: ./.github/workflows/a.yml@main
         - name: GIT commit and push all changed files
