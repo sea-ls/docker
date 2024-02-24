@@ -1,0 +1,34 @@
+name: Create all jobs
+
+on:
+  workflow_dispatch: # or workflow_call
+    services:
+      docker-25:
+        SERVICE_NAME: "docker-25"
+        DEPENDS_ON: "docker--25"
+
+jobs:
+  generate-pipeline:
+    runs-on: [ self-hosted ]
+    #   permissions:
+    #   contents: read
+    #   packages: write
+    steps:
+      - uses: actions/checkout@v3
+      - run: jsonnet -S --ext-str branch=develop --ext-str need_bkp=false test.jsonnet > generated-config.yml
+      - uses: actions/upload-artifact@master
+        with:
+          name: generated-config.yml
+          path: generated-config.yml
+  process-pipeline:
+    runs-on: [ self-hosted ]
+    needs: [   generate-pipeline ]
+    #   permissions:
+    #   contents: read
+    #   packages: write
+    steps:
+    - uses: actions/download-artifact@master
+      with:
+        name: generated-config.yml
+        path: generated-config.yml
+    - uses: generated-config.yml
