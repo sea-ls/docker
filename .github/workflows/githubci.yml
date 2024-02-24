@@ -15,7 +15,7 @@ on:
 env:
   DOCKER_REPO_PASSWORD: ${{ secrets.DOCKER_REPO_PASSWORD }}
   DOCKER_REPO_USERNAME: ${{ secrets.DOCKER_REPO_USERNAME }}
-  CI_PROJECT_NAME: ${GITHUB_REPOSITORY#*/}
+  CI_PROJECT_NAME: ${{ github.event.repository.name }}
   IMAGE: ${{ vars.DOCKER_REPO_URL }}$CI_PROJECT_NAME/${{ inputs.SERVICE_NAME }}:latest
 
 jobs:
