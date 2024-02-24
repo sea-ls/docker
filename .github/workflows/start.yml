@@ -33,4 +33,4 @@ jobs:
     #  with:
     #    name: generated-config.yml
     #    path: generated-config.yml
-    #- uses: ./generated-config.yml
+    - uses: ./generated-config.yml
