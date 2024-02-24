@@ -12,6 +12,7 @@ local dependencies = std.set(std.flattenArrays([
 local gitlabci = {
   # Шаблоны
   name: "Create and publish a Docker image",
+  on: { workflow_dispatch: ""},
   env: {
         DOCKER_REPO_PASSWORD: "${{ secrets.DOCKER_REPO_PASSWORD }}",
         DOCKER_REPO_USERNAME: "${{ secrets.DOCKER_REPO_USERNAME }}",

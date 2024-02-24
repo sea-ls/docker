@@ -33,3 +33,5 @@
       - "run": "docker build --build-arg DOCKER_REPO_URL --build-arg CI_PROJECT_NAME -t $IMAGE ./init/$SERVICE_NAME"
       - "run": "docker push $IMAGE"
 "name": "Create and publish a Docker image"
+"on":
+  "workflow_dispatch": ""
