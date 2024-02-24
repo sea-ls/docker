@@ -56,7 +56,7 @@ jobs : {
     } + {
      [dependency]: {
        "runs-on": [ "self-hosted" ],
-       needs: changes,
+       needs: "changes",
        env: {
          SERVICE_NAME: dependency,
          IMAGE: "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/" + dependency + ":latest"
