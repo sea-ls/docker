@@ -17,7 +17,7 @@
       - "id": "filter"
         "uses": "dorny/paths-filter@v3"
         "with":
-          "filters":
+          "filters": |
             "docker--25":
               - "./init/docker--25/**"
             "docker-25":

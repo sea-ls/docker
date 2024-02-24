@@ -8,6 +8,17 @@ local dependencies = std.set(std.flattenArrays([
     for service in services
 ]));
 
+local testA = {
+        [dependency]:  [
+            './init/' + dependency + '/**'
+        ] for dependency in dependencies
+    } + {
+        [service.name]:  [
+            service.name + '/**'
+        ] for service in services
+    };
+
+local str_templating = std.manifestYamlDoc(testA, true);
 
 local gitlabci = {
   # Шаблоны
@@ -40,15 +51,8 @@ jobs : {
                 uses: "dorny/paths-filter@v3",
                 id: "filter",
                 with: {
-                    filters: "|" + {
-                        [dependency]:  [
-                            './init/' + dependency + '/**'
-                        ] for dependency in dependencies
-                    } + {
-                        [service.name]:  [
-                            service.name + '/**'
-                        ] for service in services
-                    }
+                    filters: "|\n"
+                       + str_templating,
                 },
             },
         ],
