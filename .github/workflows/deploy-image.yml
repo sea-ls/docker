@@ -18,8 +18,6 @@ jobs:
   #    SERVICE_NAME: ${{ matrix.services.SERVICE_NAME }}
   #    DEPENDS_ON: ${{ matrix.services.DEPENDS_ON }}
     create-workflow:
-      permissions:
-        workflows: write
       runs-on:
         - self-hosted
       steps:
