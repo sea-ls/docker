@@ -14,6 +14,8 @@ jobs:
     #   contents: read
     #   packages: write
     steps:
+      - run: pwd
+      - run: ls
       - uses: actions/checkout@v3
       - run: jsonnet -S --ext-str branch=develop --ext-str need_bkp=false ./.github./workflows/test.jsonnet > generated-config.yml
       - uses: actions/upload-artifact@master
