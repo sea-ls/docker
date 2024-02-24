@@ -22,7 +22,7 @@ jobs:
         - self-hosted
       steps:
         - run: jsonnet -S .github/workflows/a.jsonnet > .github/workflows/a.yml
-        - uses: ./.github/workflows/a.yml@main
+        #- uses: ./.github/workflows/a.yml@main
         - name: GIT commit and push all changed files
           env:
             CI_COMMIT_MESSAGE: Continuous Integration Build Artifacts
