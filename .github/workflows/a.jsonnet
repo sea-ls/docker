@@ -12,7 +12,7 @@ local dependencies = std.set(std.flattenArrays([
 local gitlabci = {
   # Шаблоны
   name: "Create and publish a Docker image",
-  on: { workflow_dispatch: ""},
+  on: { workflow_dispatch: '' },
   env: {
         DOCKER_REPO_PASSWORD: "${{ secrets.DOCKER_REPO_PASSWORD }}",
         DOCKER_REPO_USERNAME: "${{ secrets.DOCKER_REPO_USERNAME }}",
@@ -31,7 +31,7 @@ jobs : {
        steps: [
          { uses: "actions/checkout@v3", },
          { run: "echo $DOCKER_REPO_PASSWORD | docker login $DOCKER_REPO_URL_LOGIN -u $DOCKER_REPO_USERNAME --password-stdin", },
-         { run: "echo" +  dependency, },
+         { run: "echo " +  dependency, },
          { run: "docker build --build-arg DOCKER_REPO_URL --build-arg CI_PROJECT_NAME -t $IMAGE ./init/$SERVICE_NAME", },
          { run: "docker push $IMAGE", },
        ],
@@ -43,7 +43,7 @@ jobs : {
  }  + {
     [service.name]: {
       "runs-on": [ "self-hosted" ],
-      needs: [ service.dependsOn ],
+      needs: service.dependsOn,
       env: {
         SERVICE_NAME: service.name,
         IMAGE: "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/" + service.name + ":latest"
@@ -51,7 +51,7 @@ jobs : {
       steps: [
         { uses: "actions/checkout@v3" },
         { run: "echo $DOCKER_REPO_PASSWORD | docker login $DOCKER_REPO_URL_LOGIN -u $DOCKER_REPO_USERNAME --password-stdin" },
-        { run: "echo" +  service.name },
+        { run: "echo " +  service.name },
         { run: "docker build --build-arg DOCKER_REPO_URL --build-arg CI_PROJECT_NAME -t $IMAGE ./init/$SERVICE_NAME" },
         { run: "docker push $IMAGE" },
       ],

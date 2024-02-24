@@ -14,7 +14,7 @@
     "steps":
       - "uses": "actions/checkout@v3"
       - "run": "echo $DOCKER_REPO_PASSWORD | docker login $DOCKER_REPO_URL_LOGIN -u $DOCKER_REPO_USERNAME --password-stdin"
-      - "run": "echodocker--25"
+      - "run": "echo docker--25"
       - "run": "docker build --build-arg DOCKER_REPO_URL --build-arg CI_PROJECT_NAME -t $IMAGE ./init/$SERVICE_NAME"
       - "run": "docker push $IMAGE"
   "docker-25":
@@ -28,9 +28,9 @@
     "steps":
       - "uses": "actions/checkout@v3"
       - "run": "echo $DOCKER_REPO_PASSWORD | docker login $DOCKER_REPO_URL_LOGIN -u $DOCKER_REPO_USERNAME --password-stdin"
-      - "run": "echodocker-25"
+      - "run": "echo docker-25"
       - "run": "docker build --build-arg DOCKER_REPO_URL --build-arg CI_PROJECT_NAME -t $IMAGE ./init/$SERVICE_NAME"
       - "run": "docker push $IMAGE"
 "name": "Create and publish a Docker image"
 "on":
-  "workflow_dispatch":
+  "workflow_dispatch": ""
