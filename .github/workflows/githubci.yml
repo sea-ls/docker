@@ -16,9 +16,10 @@ env:
   DOCKER_REPO_PASSWORD: ${{ secrets.DOCKER_REPO_PASSWORD }}
   DOCKER_REPO_USERNAME: ${{ secrets.DOCKER_REPO_USERNAME }}
   CI_PROJECT_NAME: ${{ github.event.repository.name }}
-  IMAGE: ${{ vars.DOCKER_REPO_URL }}${{ env.CI_PROJECT_NAME }}/${{ inputs.SERVICE_NAME }}:latest
 
 jobs:
+  env:
+    IMAGE: ${{ vars.DOCKER_REPO_URL }}$CI_PROJECT_NAME/${{ inputs.SERVICE_NAME }}:latest
   build-dependencies:
     runs-on: [ self-hosted ]
     #   permissions:
