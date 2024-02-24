@@ -8,8 +8,6 @@ on:
     #    DEPENDS_ON: "docker--25"
 
 jobs:
-  permissions:
-    workflows: write
   #call-workflow:
   #  strategy:
   #    matrix:
@@ -20,6 +18,8 @@ jobs:
   #    SERVICE_NAME: ${{ matrix.services.SERVICE_NAME }}
   #    DEPENDS_ON: ${{ matrix.services.DEPENDS_ON }}
     create-workflow:
+      permissions:
+        workflows: write
       runs-on:
         - self-hosted
       steps:
