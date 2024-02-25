@@ -17,7 +17,7 @@
       - "id": "filter"
         "uses": "dorny/paths-filter@v3"
         "with":
-          "filters": "|\n\t\"docker--25\":\n\t\s- \"./init/docker--25/**\"\n\t\"docker-25\":\n\t\s- \"docker-25/**\""
+          "filters": "|\n\t\"docker--25\":\n\t- \"./init/docker--25/**\"\n\t\"docker-25\":\n\t- \"docker-25/**\""
   "docker--25":
     "env":
       "IMAGE": "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/docker--25:latest"
