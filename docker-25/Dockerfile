@@ -5,7 +5,6 @@ ARG base_project_name=$CI_PROJECT_NAME
 FROM ${docker_repo_url}${base_project_name}/docker--25
 
 RUN apk --no-cache add -U jsonnet \
-
       && apk --no-cache add openjdk21 --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community \
       && apk --no-cache add maven --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community \
       && apk add --no-cache git \
