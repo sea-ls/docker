@@ -1,5 +1,5 @@
 local services = [
-  { name: "docker-25", dependsOn: [ "docker--25", "changes" ] },
+  { name: "docker-25", dependsOn: [ "docker--25" ] },
 ];
 
 local dependencies = std.set(std.flattenArrays([
@@ -88,7 +88,7 @@ jobs : {
  }  + {
     [service.name]: {
       "runs-on": [ "self-hosted" ],
-      needs: service.dependsOn,
+      needs: service.dependsOn +  [ "changes" ],
       "if": "${{ needs.changes.outputs." + service.name + " == 'true' }}",
       env: {
         SERVICE_NAME: service.name,
