@@ -4,7 +4,6 @@ on:
   push:
     paths:
       - '.github/**'
-    paths-ignore:
       - '!.github/workflows/generated-config.yml'
 
 jobs:
