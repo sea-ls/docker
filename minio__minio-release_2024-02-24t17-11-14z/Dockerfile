@@ -5,3 +5,7 @@ ARG base_project_name=$CI_PROJECT_NAME
 FROM ${docker_repo_url}${base_project_name}/minio__minio--release_2024-02-24t17-11-14z
 
 RUN echo a
+
+
+minio__minio-release_2024-02-24t17-11-14z
+minio__minio-release_2024-02-24t17-11-14z
