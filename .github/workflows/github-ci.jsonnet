@@ -1,6 +1,6 @@
 local services = [
   { name: "docker-25", dependsOn: [ "docker--25" ] },
-  { name: "minio--release_2024-02-24T17-11-14Z", dependsOn: [ "minio-release_2024-02-24T17-11-14Z" ] },
+  { name: "minio__minio--release_2024-02-24T17-11-14Z", dependsOn: [ "minio__minio-release_2024-02-24T17-11-14Z" ] },
 ];
 
 local dependencies = std.set(std.flattenArrays([
@@ -69,7 +69,7 @@ jobs : {
      [dependency]: {
        "runs-on": [ "self-hosted" ],
        needs: "changes",
-       "if": "${{ always() }} && ${{ needs.changes.outputs." + dependency + " == 'true' }}",
+       "if": "${{ needs.changes.outputs." + dependency + " == 'true' }} && ${{ always() }}",
        env: {
          SERVICE_NAME: dependency,
          IMAGE: "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/" + dependency + ":latest"
@@ -90,7 +90,7 @@ jobs : {
     [service.name]: {
       "runs-on": [ "self-hosted" ],
       needs:  [ "changes" ] + service.dependsOn,
-      "if": "${{ always() }} && {{ needs.changes.outputs." + service.name + " == 'true' }}",
+      "if": "{{ needs.changes.outputs." + service.name + " == 'true' }} && ${{ always() }}",
       env: {
         SERVICE_NAME: service.name,
         IMAGE: "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/" + service.name + ":latest"
