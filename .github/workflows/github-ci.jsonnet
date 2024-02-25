@@ -18,7 +18,7 @@ local testA = {
         ] for service in services
     };
 
-local str_templating = std.manifestYamlDoc(testA, true);
+local str_templating = std.manifestYamlDoc(testA, false);
 
 local gitlabci = {
   # Шаблоны
