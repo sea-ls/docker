@@ -39,6 +39,7 @@
     "if": "${{ needs.changes.outputs.docker-25 == 'true' }}"
     "needs":
       - "changes"
+      - "docker--25"
     "runs-on":
       - "self-hosted"
     "steps":
