@@ -31,4 +31,4 @@ jobs:
             git config --global user.email "osagrigoriy@mail.ru"
             git add .github/workflows/generated-config.yml
             git commit -a -m "${{ env.CI_COMMIT_MESSAGE }}"
-            git push
+            git push || echo "No changes to commit"
