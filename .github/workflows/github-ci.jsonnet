@@ -29,9 +29,9 @@ local arrayToString(arr) =
     // to serialize them (e.g. toString or manifestJson).
     local elem = std.escapeStringJson(arr[index]);
     if index == std.length(arr) - 1 then
-       "|| needs.changes.outputs." + elem + "'true'"
+       " || needs.changes.outputs." + std.strReplace(elem, "\"", "") + " == 'true'"
     else
-      elem + " || needs.changes.outputs." + aux(arr, index + 1) + " == 'true'"
+      elem + " || needs.changes.outputs." +  std.strReplace(aux(arr, index + 1)) + " == 'true'"
   ;
   aux(arr, 0);
 
