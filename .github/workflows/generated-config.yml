@@ -38,7 +38,6 @@
       "SERVICE_NAME": "docker-25"
     "if": "${{ needs.changes.outputs.docker-25 == 'true' }}"
     "needs":
-      - "docker--25"
       - "changes"
     "runs-on":
       - "self-hosted"
