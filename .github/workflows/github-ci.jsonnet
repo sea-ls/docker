@@ -60,6 +60,7 @@ jobs : {
      [dependency]: {
        "runs-on": [ "self-hosted" ],
        needs: "changes",
+       "if": "${{ needs.changes.outputs." + dependency + " == 'true' }}",
        env: {
          SERVICE_NAME: dependency,
          IMAGE: "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/" + dependency + ":latest"
@@ -80,6 +81,7 @@ jobs : {
     [service.name]: {
       "runs-on": [ "self-hosted" ],
       needs: service.dependsOn,
+      "if": "${{ needs.changes.outputs." + service.name + " == 'true' }}",
       env: {
         SERVICE_NAME: service.name,
         IMAGE: "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/" + service.name + ":latest"
@@ -88,7 +90,7 @@ jobs : {
         { uses: "actions/checkout@v3" },
         { run: "echo $DOCKER_REPO_PASSWORD | docker login $DOCKER_REPO_URL_LOGIN -u $DOCKER_REPO_USERNAME --password-stdin" },
         { run: "echo " +  service.name },
-        { run: "docker build --build-arg DOCKER_REPO_URL --build-arg CI_PROJECT_NAME -t $IMAGE ./init/$SERVICE_NAME" },
+        { run: "docker build --build-arg DOCKER_REPO_URL --build-arg CI_PROJECT_NAME -t $IMAGE ./$SERVICE_NAME" },
         { run: "docker push $IMAGE" },
       ],
 //     environment: {
