@@ -23,7 +23,11 @@ local str_templating = std.manifestYamlDoc(testA, false);
 local gitlabci = {
   # Шаблоны
   name: "Create and publish a Docker image",
-  on: { push: {}},
+  on: {
+    push: {
+        "paths-ignore": [ ".github/**" ]
+    }
+  },
   env: {
         DOCKER_REPO_PASSWORD: "${{ secrets.DOCKER_REPO_PASSWORD }}",
         DOCKER_REPO_USERNAME: "${{ secrets.DOCKER_REPO_USERNAME }}",
