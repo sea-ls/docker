@@ -19,7 +19,7 @@
       - "id": "filter"
         "uses": "dorny/paths-filter@v3"
         "with":
-          "filters": "\"docker--25\":\n- \"./init/docker--25/**\"\n\"docker-25\":\n- \"docker-25/**\"\n\"minio__minio--release_2024-02-24t17-11-14z\":\n- \"minio__minio--release_2024-02-24t17-11-14z/**\"\n\"minio__minio-release_2024-02-24t17-11-14z\":\n- \"./init/minio__minio-release_2024-02-24t17-11-14z/**\""
+          "filters": "\"docker--25\":\n- \"./init/docker--25/**\"\n\"docker-25\":\n- \"docker-25/**\"\n\"minio__minio--release_2024-02-24t17-11-14z\":\n- \"./init/minio__minio--release_2024-02-24t17-11-14z/**\"\n\"minio__minio-release_2024-02-24t17-11-14z\":\n- \"minio__minio-release_2024-02-24t17-11-14z/**\""
   "docker--25":
     "env":
       "IMAGE": "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/docker--25:latest"
@@ -55,30 +55,30 @@
       "IMAGE": "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/minio__minio--release_2024-02-24t17-11-14z:latest"
       "SERVICE_NAME": "minio__minio--release_2024-02-24t17-11-14z"
     "if": "${{ needs.changes.outputs.minio__minio--release_2024-02-24t17-11-14z == 'true' && always() }}"
-    "needs":
-      - "changes"
-      - "minio__minio-release_2024-02-24t17-11-14z"
-    "runs-on":
-      - "self-hosted"
-    "steps":
-      - "uses": "actions/checkout@v3"
-      - "run": "echo $DOCKER_REPO_PASSWORD | docker login $DOCKER_REPO_URL_LOGIN -u $DOCKER_REPO_USERNAME --password-stdin"
-      - "run": "echo minio__minio--release_2024-02-24t17-11-14z"
-      - "run": "docker build --build-arg DOCKER_REPO_URL --build-arg CI_PROJECT_NAME -t $IMAGE ./$SERVICE_NAME"
-      - "run": "docker push $IMAGE"
-  "minio__minio-release_2024-02-24t17-11-14z":
-    "env":
-      "IMAGE": "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/minio__minio-release_2024-02-24t17-11-14z:latest"
-      "SERVICE_NAME": "minio__minio-release_2024-02-24t17-11-14z"
-    "if": "${{ needs.changes.outputs.minio__minio-release_2024-02-24t17-11-14z == 'true' && always() }}"
     "needs": "changes"
     "runs-on":
       - "self-hosted"
     "steps":
       - "uses": "actions/checkout@v3"
       - "run": "echo $DOCKER_REPO_PASSWORD | docker login $DOCKER_REPO_URL_LOGIN -u $DOCKER_REPO_USERNAME --password-stdin"
-      - "run": "echo minio__minio-release_2024-02-24t17-11-14z"
+      - "run": "echo minio__minio--release_2024-02-24t17-11-14z"
       - "run": "docker build --build-arg DOCKER_REPO_URL --build-arg CI_PROJECT_NAME -t $IMAGE ./init/$SERVICE_NAME"
+      - "run": "docker push $IMAGE"
+  "minio__minio-release_2024-02-24t17-11-14z":
+    "env":
+      "IMAGE": "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/minio__minio-release_2024-02-24t17-11-14z:latest"
+      "SERVICE_NAME": "minio__minio-release_2024-02-24t17-11-14z"
+    "if": "${{ needs.changes.outputs.minio__minio-release_2024-02-24t17-11-14z == 'true' && always() }}"
+    "needs":
+      - "changes"
+      - "minio__minio--release_2024-02-24t17-11-14z"
+    "runs-on":
+      - "self-hosted"
+    "steps":
+      - "uses": "actions/checkout@v3"
+      - "run": "echo $DOCKER_REPO_PASSWORD | docker login $DOCKER_REPO_URL_LOGIN -u $DOCKER_REPO_USERNAME --password-stdin"
+      - "run": "echo minio__minio-release_2024-02-24t17-11-14z"
+      - "run": "docker build --build-arg DOCKER_REPO_URL --build-arg CI_PROJECT_NAME -t $IMAGE ./$SERVICE_NAME"
       - "run": "docker push $IMAGE"
 "name": "Create and publish a Docker image"
 "on":
