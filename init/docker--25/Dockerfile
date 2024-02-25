@@ -1,1 +1,1 @@
-FROM docker:25
+FROM docker:26
