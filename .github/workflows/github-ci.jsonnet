@@ -51,8 +51,7 @@ jobs : {
                 uses: "dorny/paths-filter@v3",
                 id: "filter",
                 with: {
-                    filters: "|\n"
-                       + str_templating,
+                    filters: str_templating,
                 },
             },
         ],
