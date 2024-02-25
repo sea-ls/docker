@@ -6,18 +6,19 @@
   "DOCKER_REPO_USERNAME": "${{ secrets.DOCKER_REPO_USERNAME }}"
 "jobs":
   "changes":
-    "outputs":
-      "docker--25": "${{ steps.filter.outputs.docker--25 }}"
-      "docker-25": "${{ steps.filter.outputs.docker-25 }}"
-    "permissions":
-      "pull-requests": "read"
+    "env":
+      "IMAGE": "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/changes:latest"
+      "SERVICE_NAME": "changes"
+    "if": "${{ needs.changes.outputs.changes == 'true' }}"
+    "needs": "changes"
     "runs-on":
       - "self-hosted"
     "steps":
-      - "id": "filter"
-        "uses": "dorny/paths-filter@v3"
-        "with":
-          "filters": "\"docker--25\":\n- \"./init/docker--25/**\"\n\"docker-25\":\n- \"docker-25/**\""
+      - "uses": "actions/checkout@v3"
+      - "run": "echo $DOCKER_REPO_PASSWORD | docker login $DOCKER_REPO_URL_LOGIN -u $DOCKER_REPO_USERNAME --password-stdin"
+      - "run": "echo changes"
+      - "run": "docker build --build-arg DOCKER_REPO_URL --build-arg CI_PROJECT_NAME -t $IMAGE ./init/$SERVICE_NAME"
+      - "run": "docker push $IMAGE"
   "docker--25":
     "env":
       "IMAGE": "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/docker--25:latest"
@@ -37,7 +38,9 @@
       "IMAGE": "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/docker-25:latest"
       "SERVICE_NAME": "docker-25"
     "if": "${{ needs.changes.outputs.docker-25 == 'true' }}"
-    "needs": "[\"docker--25\"]changes"
+    "needs":
+      - "docker--25"
+      - "changes"
     "runs-on":
       - "self-hosted"
     "steps":
