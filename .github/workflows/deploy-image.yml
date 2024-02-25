@@ -3,7 +3,6 @@ name: Create all jobs
 on:
   push:
     paths:
-      - '.github/**'
       - '!.github/workflows/generated-config.yml'
 
 jobs:

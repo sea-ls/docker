@@ -24,8 +24,9 @@ local gitlabci = {
   # Шаблоны
   name: "Create and publish a Docker image",
   on: {
-    push: {
-        "paths-ignore": [ ".github/**" ]
+    workflow_run: {
+        workflows: [ "Create all jobs" ],
+        types: [completed]
     }
   },
   env: {
