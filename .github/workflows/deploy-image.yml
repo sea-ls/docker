@@ -3,9 +3,9 @@ name: Create all jobs
 on:
   push:
     paths:
-      - .github/**
+      - '.github/**'
     paths-ignore:
-      - .github/workflows/generated-config.yml
+      - '!.github/workflows/generated-config.yml'
 
 jobs:
   #call-workflow:
