@@ -21,6 +21,21 @@ local testA = {
 
 local str_templating = std.manifestYamlDoc(testA, false);
 
+# Пока берется толкьо 0 элемент
+local arrayToString(arr) =
+  local aux(arr, index) =
+    // Assuming escapeStringJson is how you want to serialize
+    // the elements. Of course you can use any other way
+    // to serialize them (e.g. toString or manifestJson).
+    local elem = std.escapeStringJson(arr[index]);
+    if index == std.length(arr) - 1 then
+       "|| needs.changes.outputs." + elem + "'true'"
+    else
+      elem + " || needs.changes.outputs." + aux(arr, index + 1) + " == 'true'"
+  ;
+  aux(arr, 0);
+
+
 local gitlabci = {
   # Шаблоны
   name: "Create and publish a Docker image",
@@ -90,7 +105,7 @@ jobs : {
     [service.name]: {
       "runs-on": [ "self-hosted" ],
       needs:  [ "changes" ] + service.dependsOn,
-      "if": "${{ (needs.changes.outputs." + service.name + " == 'true' || needs.changes.outputs." + service.dependsOn + " == 'true') && always() }}",
+      "if": "${{ (needs.changes.outputs." + service.name + " == 'true'" + arrayToString(service.dependsOn) + ") && always() }}",
       env: {
         SERVICE_NAME: service.name,
         IMAGE: "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/" + service.name + ":latest"
