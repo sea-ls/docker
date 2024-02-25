@@ -26,8 +26,8 @@ jobs:
         #- uses: ./.github/workflows/a.yml@main
         - name: GIT commit and push all changed files
           env:
-            CI_COMMIT_MESSAGE: Create workflow from jsonnet
-            CI_COMMIT_AUTHOR: GitHub Runner - RUNNER_NAME
+            CI_COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
+            CI_COMMIT_AUTHOR: GitHub Runner - $RUNNER_NAME
           run: |
             git config --global user.name "${{ env.CI_COMMIT_AUTHOR }}"
             git config --global user.email "osagrigoriy@mail.ru"
