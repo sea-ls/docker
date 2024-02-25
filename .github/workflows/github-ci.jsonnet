@@ -88,7 +88,7 @@ jobs : {
  }  + {
     [service.name]: {
       "runs-on": [ "self-hosted" ],
-      needs: service.dependsOn,
+      needs: [ "changes", service.dependsOn ],
       "if": "${{ needs.changes.outputs." + service.name + " == 'true' }}",
       env: {
         SERVICE_NAME: service.name,
