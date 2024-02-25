@@ -14,7 +14,7 @@ local testA = {
         ] for dependency in dependencies
     } + {
         [service.name]:  [
-            service.name + '/**'
+            '' + service.name + '/**'
         ] for service in services
     };
 
