@@ -1,5 +1,5 @@
 local services = [
-  { name: "docker-25",                    dependsOn: [ "docker--25", "changes" ] },
+  { name: "docker-25", dependsOn: [ "docker--25", "changes" ] },
 ];
 
 local dependencies = std.set(std.flattenArrays([
