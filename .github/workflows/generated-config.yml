@@ -49,6 +49,9 @@
       - "run": "docker push $IMAGE"
 "name": "Create and publish a Docker image"
 "on":
+  "push":
+    "paths-ignore":
+      - ".github/**"
   "workflow_run":
     "types":
       - "completed"
