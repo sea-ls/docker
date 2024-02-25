@@ -1,6 +1,6 @@
 local services = [
   { name: "docker-25", dependsOn: [ "docker--25" ] },
-  { name: "minio__minio-release_2024-02-24t17-11-14z", dependsOn: [ "minio__minio--release_2024-02-24t17-11-14z" ] },
+  { name: "minio-release_2024-02-24t17-11-14z", dependsOn: [ "minio__minio--release_2024-02-24t17-11-14z" ] },
 ];
 
 local dependencies = std.set(std.flattenArrays([
