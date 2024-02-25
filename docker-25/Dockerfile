@@ -14,5 +14,4 @@ RUN apk --no-cache add -U jsonnet \
       && apk --no-cache add openjdk11 --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community \
       && apk --no-cache add maven --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community \
       && apk add --no-cache git \
-      && apk add --no-cache bash \
-      && apk add --no-cache git-flow
+      && apk add --no-cache bash
