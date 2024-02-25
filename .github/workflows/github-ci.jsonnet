@@ -90,7 +90,7 @@ jobs : {
     [service.name]: {
       "runs-on": [ "self-hosted" ],
       needs:  [ "changes" ] + service.dependsOn,
-      "if": "${{ (needs.changes.outputs." + dependency + " == 'true' && always()) || (needs.changes.outputs." + dependency + " == 'false' && success())}}",
+      "if": "${{ (needs.changes.outputs." + service.name + " == 'true' && always()) || (needs.changes.outputs." + service.name + " == 'false' && success())}}",
       env: {
         SERVICE_NAME: service.name,
         IMAGE: "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/" + service.name + ":latest"
