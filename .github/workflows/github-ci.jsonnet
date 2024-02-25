@@ -27,6 +27,9 @@ local gitlabci = {
     workflow_run: {
         workflows: [ "Create all jobs" ],
         types: [ "completed" ]
+    },
+    push: {
+        "paths-ignore": [ '.github/**' ]
     }
   },
   env: {
