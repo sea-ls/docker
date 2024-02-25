@@ -26,7 +26,7 @@ local gitlabci = {
   on: {
     workflow_run: {
         workflows: [ "Create all jobs" ],
-        types: [completed]
+        types: [ "completed" ]
     }
   },
   env: {
