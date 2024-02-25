@@ -38,7 +38,7 @@
     "env":
       "IMAGE": "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/docker-25:latest"
       "SERVICE_NAME": "docker-25"
-    "if": "${{ (needs.changes.outputs.docker-25 == 'true' || needs.changes.outputs.[\"docker--25\"] == 'true') && always() }}"
+    "if": "${{ (needs.changes.outputs.docker-25 == 'true'|| needs.changes.outputs.\"docker--25\"'true') && always() }}"
     "needs":
       - "changes"
       - "docker--25"
@@ -68,7 +68,7 @@
     "env":
       "IMAGE": "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/minio__minio-release_2024-02-24t17-11-14z:latest"
       "SERVICE_NAME": "minio__minio-release_2024-02-24t17-11-14z"
-    "if": "${{ (needs.changes.outputs.minio__minio-release_2024-02-24t17-11-14z == 'true' || needs.changes.outputs.[\"minio__minio--release_2024-02-24t17-11-14z\"] == 'true') && always() }}"
+    "if": "${{ (needs.changes.outputs.minio__minio-release_2024-02-24t17-11-14z == 'true'|| needs.changes.outputs.\"minio__minio--release_2024-02-24t17-11-14z\"'true') && always() }}"
     "needs":
       - "changes"
       - "minio__minio--release_2024-02-24t17-11-14z"
