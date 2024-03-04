@@ -41,6 +41,7 @@ local gitlabci = {
   # Шаблоны
   name: "Create and publish a Docker image",
   on: {
+    workflow_dispatch: {},
     workflow_run: {
         workflows: [ "Create all jobs" ],
         types: [ "completed" ]
