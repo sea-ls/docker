@@ -85,7 +85,16 @@
   "push":
     "paths-ignore":
       - ".github/**"
-  "workflow_dispatch": {}
+  "workflow_dispatch":
+    "inputs":
+      "build":
+        "description": "Who to build"
+        "options":
+          - "minio-release_2024-02-24t17-11-14z"
+          - "postgres-16"
+          - "minio__minio--release_2024-02-24t17-11-14z"
+          - "postgres--16"
+        "type": "choice"
   "workflow_run":
     "types":
       - "completed"
