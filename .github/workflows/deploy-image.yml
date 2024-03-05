@@ -9,5 +9,5 @@ on:
 
 jobs:
     create-workflow:
-      uses: sea-ls/pipe/.github/workflows/PipelineGeneration.github-ci.yml@main
+      uses: sea-ls/Pipe/.github/workflows/PipelineGeneration.github-ci.yml@main
       secrets: inherit
