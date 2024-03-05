@@ -24,7 +24,7 @@
     "env":
       "IMAGE": "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/minio-release_2024-02-24t17-11-14z:latest"
       "SERVICE_NAME": "minio-release_2024-02-24t17-11-14z"
-    "if": "${{github.event.inputs.build == minio-release_2024-02-24t17-11-14z || (needs.changes.outputs.minio-release_2024-02-24t17-11-14z == 'true' || needs.changes.outputs.minio__minio--release_2024-02-24t17-11-14z == 'true') && always() }}"
+    "if": "${{github.event.inputs.build == 'minio-release_2024-02-24t17-11-14z' || (needs.changes.outputs.minio-release_2024-02-24t17-11-14z == 'true' || needs.changes.outputs.minio__minio--release_2024-02-24t17-11-14z == 'true') && always() }}"
     "needs":
       - "changes"
       - "minio__minio--release_2024-02-24t17-11-14z"
@@ -40,7 +40,7 @@
     "env":
       "IMAGE": "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/minio__minio--release_2024-02-24t17-11-14z:latest"
       "SERVICE_NAME": "minio__minio--release_2024-02-24t17-11-14z"
-    "if": "${{github.event.inputs.build == minio__minio--release_2024-02-24t17-11-14z || needs.changes.outputs.minio__minio--release_2024-02-24t17-11-14z == 'true' && always() }}"
+    "if": "${{github.event.inputs.build == 'minio__minio--release_2024-02-24t17-11-14z' || needs.changes.outputs.minio__minio--release_2024-02-24t17-11-14z == 'true' && always() }}"
     "needs": "changes"
     "runs-on":
       - "self-hosted"
@@ -54,7 +54,7 @@
     "env":
       "IMAGE": "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/postgres--16:latest"
       "SERVICE_NAME": "postgres--16"
-    "if": "${{github.event.inputs.build == postgres--16 || needs.changes.outputs.postgres--16 == 'true' && always() }}"
+    "if": "${{github.event.inputs.build == 'postgres--16' || needs.changes.outputs.postgres--16 == 'true' && always() }}"
     "needs": "changes"
     "runs-on":
       - "self-hosted"
@@ -68,7 +68,7 @@
     "env":
       "IMAGE": "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/postgres-16:latest"
       "SERVICE_NAME": "postgres-16"
-    "if": "${{github.event.inputs.build == postgres-16 || (needs.changes.outputs.postgres-16 == 'true' || needs.changes.outputs.postgres--16 == 'true') && always() }}"
+    "if": "${{github.event.inputs.build == 'postgres-16' || (needs.changes.outputs.postgres-16 == 'true' || needs.changes.outputs.postgres--16 == 'true') && always() }}"
     "needs":
       - "changes"
       - "postgres--16"
