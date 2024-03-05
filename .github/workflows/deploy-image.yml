@@ -7,31 +7,6 @@ on:
       - '!.github/workflows/generated-config.yml'
 
 jobs:
-  #call-workflow:
-  #  strategy:
-  #    matrix:
-  #      services: [ {SERVICE_NAME: "docker-25", DEPENDS_ON: "docker--25" } ]
-  #  uses: ./.github/workflows/githubci.yml
-  #  secrets: inherit
-  #  with:
-  #    SERVICE_NAME: ${{ matrix.services.SERVICE_NAME }}
-  #    DEPENDS_ON: ${{ matrix.services.DEPENDS_ON }}
     create-workflow:
-      runs-on:
-        - self-hosted
-      steps:
-        - uses: actions/checkout@v4
-          with:
-            token: ${{ secrets.WORKFLOW_TOKEN }}
-        - run: jsonnet -S .github/workflows/github-ci.jsonnet > .github/workflows/generated-config.yml
-        #- uses: ./.github/workflows/a.yml@main
-        - name: GIT commit and push all changed files
-          env:
-            CI_COMMIT_MESSAGE: Create workflow from jsonnet
-            CI_COMMIT_AUTHOR: GitHub Runner - RUNNER_NAME
-          run: |
-            git config --global user.name "${{ env.CI_COMMIT_AUTHOR }}"
-            git config --global user.email "osagrigoriy@mail.ru"
-            git add .github/workflows/generated-config.yml
-            git commit -a -m "${{ env.CI_COMMIT_MESSAGE }}" && 
-            git push || echo "No changes to commit"
+      uses: sea-ls/Pipe/.github/workflows/PipelineGeneration.github-ci.yml@main
+      secrets: inherit
