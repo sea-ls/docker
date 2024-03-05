@@ -1,6 +1,7 @@
 name: Create all jobs
 
 on:
+  workflow_dispatch:
   push:
     paths:
       - '.github/**'
