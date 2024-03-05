@@ -8,6 +8,6 @@ on:
       - '!.github/workflows/generated-config.yml'
 
 jobs:
-    create-workflow:
+    call-workflow:
       uses: sea-ls/pipe/.github/workflows/pipeline-generation.github-ci.yml@main
       secrets: inherit
