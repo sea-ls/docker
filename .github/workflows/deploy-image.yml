@@ -10,4 +10,3 @@ on:
 jobs:
     create-workflow:
       uses: sea-ls/Pipe/.github/workflows/PipelineGeneration.github-ci.yml@main
-      secrets: inherit
