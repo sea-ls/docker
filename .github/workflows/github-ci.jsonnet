@@ -10,7 +10,7 @@ local dependencies = std.set(std.flattenArrays([
     for service in services
 ]));
 
-local testA = {
+local filterArray = {
         [dependency]:  [
             './init/' + dependency + '/**'
         ] for dependency in dependencies
@@ -20,7 +20,7 @@ local testA = {
         ] for service in services
     };
 
-local str_templating = std.manifestYamlDoc(testA, false);
+local filters = std.manifestYamlDoc(filterArray, false);
 
 # Пока берется толкьо 0 элемент
 local arrayToString(arr) =
@@ -89,7 +89,7 @@ jobs : {
                 uses: "dorny/paths-filter@v3",
                 id: "filter",
                 with: {
-                    filters: str_templating,
+                    filters: filters,
                 },
             },
         ],
@@ -110,10 +110,6 @@ jobs : {
          { run: "docker build --build-arg DOCKER_REPO_URL --build-arg CI_PROJECT_NAME -t $IMAGE ./init/$SERVICE_NAME", },
          { run: "docker push $IMAGE", },
        ],
- //      environment: {
- //        name: "dev",
- //        url: "https://ucso-dev.opencode.su",
- //      },
      }, for dependency in dependencies
  }  + {
     [service.name]: {
@@ -131,10 +127,6 @@ jobs : {
         { run: "docker build --build-arg DOCKER_REPO_URL --build-arg CI_PROJECT_NAME -t $IMAGE ./$SERVICE_NAME" },
         { run: "docker push $IMAGE" },
       ],
-//     environment: {
-//       name: "dev",
-//       url: "https://ucso-dev.opencode.su",
-//     },
     }, for service in services
 }
 };
