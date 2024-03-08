@@ -1,5 +1,5 @@
 local services = [
-  //{ name: "docker-25", dependsOn: [ "docker--25" ] },
+  { name: "docker-25", dependsOn: [ "docker--25" ] },
   { name: "minio-release_2024-02-24t17-11-14z", dependsOn: [ "minio__minio--release_2024-02-24t17-11-14z" ] },
   { name: "postgres-16", dependsOn: [ "postgres--16" ] },
 ];
@@ -52,7 +52,11 @@ local gitlabci = {
                     dependency for dependency in dependencies
                 ],
             },
-        }
+        },
+    },
+    pull_request: {
+        types: [ closed ]
+    },
     },
     workflow_run: {
         workflows: [ "Create all jobs" ],
