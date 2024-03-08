@@ -55,8 +55,7 @@ local gitlabci = {
         },
     },
     pull_request: {
-        types: [ closed ]
-    },
+        types: [ closed ],
     },
     workflow_run: {
         workflows: [ "Create all jobs" ],
