@@ -34,7 +34,7 @@ local arrayToString(arr) =
     if index == std.length(arr) - 1 then
        " || 'needs.changes.outputs." + std.strReplace(elem, "\"", "") + "' == 'true'"
     else
-      elem + " || needs.changes.outputs." +  std.strReplace(aux(arr, index + 1)) + " == 'true'"
+      elem + " || 'needs.changes.outputs." +  std.strReplace(aux(arr, index + 1)) + "' == 'true'"
   ;
   aux(arr, 0);
 
