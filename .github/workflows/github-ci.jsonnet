@@ -1,3 +1,6 @@
+//TODO при запуске вручную changes пропускать changes
+//TODO Приве запуске вручную корневого образа, собирать зависимый
+
 local services = [
   { name: "docker-25", dependsOn: [ "docker--25" ] },
   { name: "minio-release_2024-02-24t17-11-14z", dependsOn: [ "minio__minio--release_2024-02-24t17-11-14z" ] },
@@ -80,7 +83,7 @@ jobs : {
         # Required permissions
         permissions:{
             "pull-requests": "read"
-        } ,
+        },
         outputs: {
              [dependency]: "${{ steps.filter.outputs." + dependency + " }}"
              for dependency in dependencies
