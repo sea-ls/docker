@@ -1,0 +1,1 @@
+FROM paketobuildpacks/run-jammy-base:0.1.105
