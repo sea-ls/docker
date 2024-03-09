@@ -82,10 +82,10 @@ jobs : {
             "pull-requests": "read"
         } ,
         outputs: {
-             [dependency]: "${{ steps.filter.outputs." + dependency + " }}"
+             [dependency]: "${{ 'steps.filter.outputs." + dependency + "' }}"
              for dependency in dependencies
         } + {
-            [service.name]: "${{ steps.filter.outputs." + service.name + " }}"
+            [service.name]: "${{ 'steps.filter.outputs." + service.name + "' }}"
             for service in services
         },
         steps: [
