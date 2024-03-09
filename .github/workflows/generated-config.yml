@@ -9,7 +9,7 @@
     "env":
       "IMAGE": "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/builder-jammy-base-0.4.278:latest"
       "SERVICE_NAME": "builder-jammy-base-0.4.278"
-    "if": "${{github.event.inputs.build == 'builder-jammy-base-0.4.278' || (needs.changes.outputs.builder-jammy-base-0.4.278 == 'true' || 'needs.changes.outputs.paketobuildpacks__builder-jammy-base--0.4.278' == 'true') && always() }}"
+    "if": "${{github.event.inputs.build == 'builder-jammy-base-0.4.278' || ('needs.changes.outputs.builder-jammy-base-0.4.278' == 'true' || 'needs.changes.outputs.paketobuildpacks__builder-jammy-base--0.4.278' == 'true') && always() }}"
     "needs":
       - "changes"
       - "paketobuildpacks__builder-jammy-base--0.4.278"
@@ -46,7 +46,7 @@
     "env":
       "IMAGE": "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/docker--25:latest"
       "SERVICE_NAME": "docker--25"
-    "if": "${{github.event.inputs.build == 'docker--25' || needs.changes.outputs.docker--25 == 'true' && always() }}"
+    "if": "${{github.event.inputs.build == 'docker--25' || 'needs.changes.outputs.docker--25' == 'true' && always() }}"
     "needs": "changes"
     "runs-on":
       - "self-hosted"
@@ -60,7 +60,7 @@
     "env":
       "IMAGE": "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/docker-25:latest"
       "SERVICE_NAME": "docker-25"
-    "if": "${{github.event.inputs.build == 'docker-25' || (needs.changes.outputs.docker-25 == 'true' || 'needs.changes.outputs.docker--25' == 'true') && always() }}"
+    "if": "${{github.event.inputs.build == 'docker-25' || ('needs.changes.outputs.docker-25' == 'true' || 'needs.changes.outputs.docker--25' == 'true') && always() }}"
     "needs":
       - "changes"
       - "docker--25"
@@ -76,7 +76,7 @@
     "env":
       "IMAGE": "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/minio-release_2024-02-24t17-11-14z:latest"
       "SERVICE_NAME": "minio-release_2024-02-24t17-11-14z"
-    "if": "${{github.event.inputs.build == 'minio-release_2024-02-24t17-11-14z' || (needs.changes.outputs.minio-release_2024-02-24t17-11-14z == 'true' || 'needs.changes.outputs.minio__minio--release_2024-02-24t17-11-14z' == 'true') && always() }}"
+    "if": "${{github.event.inputs.build == 'minio-release_2024-02-24t17-11-14z' || ('needs.changes.outputs.minio-release_2024-02-24t17-11-14z' == 'true' || 'needs.changes.outputs.minio__minio--release_2024-02-24t17-11-14z' == 'true') && always() }}"
     "needs":
       - "changes"
       - "minio__minio--release_2024-02-24t17-11-14z"
@@ -92,7 +92,7 @@
     "env":
       "IMAGE": "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/minio__minio--release_2024-02-24t17-11-14z:latest"
       "SERVICE_NAME": "minio__minio--release_2024-02-24t17-11-14z"
-    "if": "${{github.event.inputs.build == 'minio__minio--release_2024-02-24t17-11-14z' || needs.changes.outputs.minio__minio--release_2024-02-24t17-11-14z == 'true' && always() }}"
+    "if": "${{github.event.inputs.build == 'minio__minio--release_2024-02-24t17-11-14z' || 'needs.changes.outputs.minio__minio--release_2024-02-24t17-11-14z' == 'true' && always() }}"
     "needs": "changes"
     "runs-on":
       - "self-hosted"
@@ -106,7 +106,7 @@
     "env":
       "IMAGE": "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/paketobuildpacks__builder-jammy-base--0.4.278:latest"
       "SERVICE_NAME": "paketobuildpacks__builder-jammy-base--0.4.278"
-    "if": "${{github.event.inputs.build == 'paketobuildpacks__builder-jammy-base--0.4.278' || needs.changes.outputs.paketobuildpacks__builder-jammy-base--0.4.278 == 'true' && always() }}"
+    "if": "${{github.event.inputs.build == 'paketobuildpacks__builder-jammy-base--0.4.278' || 'needs.changes.outputs.paketobuildpacks__builder-jammy-base--0.4.278' == 'true' && always() }}"
     "needs": "changes"
     "runs-on":
       - "self-hosted"
@@ -120,7 +120,7 @@
     "env":
       "IMAGE": "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/paketobuildpacks__run-jammy-base--0.1.105:latest"
       "SERVICE_NAME": "paketobuildpacks__run-jammy-base--0.1.105"
-    "if": "${{github.event.inputs.build == 'paketobuildpacks__run-jammy-base--0.1.105' || needs.changes.outputs.paketobuildpacks__run-jammy-base--0.1.105 == 'true' && always() }}"
+    "if": "${{github.event.inputs.build == 'paketobuildpacks__run-jammy-base--0.1.105' || 'needs.changes.outputs.paketobuildpacks__run-jammy-base--0.1.105' == 'true' && always() }}"
     "needs": "changes"
     "runs-on":
       - "self-hosted"
@@ -134,7 +134,7 @@
     "env":
       "IMAGE": "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/postgres--16:latest"
       "SERVICE_NAME": "postgres--16"
-    "if": "${{github.event.inputs.build == 'postgres--16' || needs.changes.outputs.postgres--16 == 'true' && always() }}"
+    "if": "${{github.event.inputs.build == 'postgres--16' || 'needs.changes.outputs.postgres--16' == 'true' && always() }}"
     "needs": "changes"
     "runs-on":
       - "self-hosted"
@@ -148,7 +148,7 @@
     "env":
       "IMAGE": "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/postgres-16:latest"
       "SERVICE_NAME": "postgres-16"
-    "if": "${{github.event.inputs.build == 'postgres-16' || (needs.changes.outputs.postgres-16 == 'true' || 'needs.changes.outputs.postgres--16' == 'true') && always() }}"
+    "if": "${{github.event.inputs.build == 'postgres-16' || ('needs.changes.outputs.postgres-16' == 'true' || 'needs.changes.outputs.postgres--16' == 'true') && always() }}"
     "needs":
       - "changes"
       - "postgres--16"
@@ -164,7 +164,7 @@
     "env":
       "IMAGE": "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/run-jammy-base-0.1.105:latest"
       "SERVICE_NAME": "run-jammy-base-0.1.105"
-    "if": "${{github.event.inputs.build == 'run-jammy-base-0.1.105' || (needs.changes.outputs.run-jammy-base-0.1.105 == 'true' || 'needs.changes.outputs.paketobuildpacks__run-jammy-base--0.1.105' == 'true') && always() }}"
+    "if": "${{github.event.inputs.build == 'run-jammy-base-0.1.105' || ('needs.changes.outputs.run-jammy-base-0.1.105' == 'true' || 'needs.changes.outputs.paketobuildpacks__run-jammy-base--0.1.105' == 'true') && always() }}"
     "needs":
       - "changes"
       - "paketobuildpacks__run-jammy-base--0.1.105"
