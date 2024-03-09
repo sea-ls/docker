@@ -38,7 +38,6 @@ local arrayToString(arr) =
   ;
   aux(arr, 0);
 
-
 local gitlabci = {
   # Шаблоны
   name: "Create and publish a Docker image",
