@@ -2,8 +2,8 @@ local services = [
   { name: "docker-25", dependsOn: [ "docker--25" ] },
   { name: "minio-release_2024-02-24t17-11-14z", dependsOn: [ "minio__minio--release_2024-02-24t17-11-14z" ] },
   { name: "postgres-16", dependsOn: [ "postgres--16" ] },
-  { name: "builder-jammy-base-0.4.278", dependsOn: [ "paketobuildpacks__builder-jammy-base--0.4.278" ] },
-  { name: "run-jammy-base-0.1.105", dependsOn: [ "paketobuildpacks__run-jammy-base--0.1.105" ] },
+  { name: "builder-jammy-base-0_4_278", dependsOn: [ "paketobuildpacks__builder-jammy-base--0_4_278" ] },
+  { name: "run-jammy-base-0_1_105", dependsOn: [ "paketobuildpacks__run-jammy-base--0_1_105" ] },
 ];
 
 local dependencies = std.set(std.flattenArrays([
@@ -32,9 +32,9 @@ local arrayToString(arr) =
     // to serialize them (e.g. toString or manifestJson).
     local elem = std.escapeStringJson(arr[index]);
     if index == std.length(arr) - 1 then
-       " || 'needs.changes.outputs." + std.strReplace(elem, "\"", "") + "' == 'true'"
+       " || needs.changes.outputs." + std.strReplace(elem, "\"", "") + " == 'true'"
     else
-      elem + " || 'needs.changes.outputs." +  std.strReplace(aux(arr, index + 1)) + "' == 'true'"
+      elem + " || needs.changes.outputs." +  std.strReplace(aux(arr, index + 1)) + " == 'true'"
   ;
   aux(arr, 0);
 
@@ -82,10 +82,10 @@ jobs : {
             "pull-requests": "read"
         } ,
         outputs: {
-             [dependency]: "${{ 'steps.filter.outputs." + dependency + "' }}"
+             [dependency]: "${{ steps.filter.outputs." + dependency + " }}"
              for dependency in dependencies
         } + {
-            [service.name]: "${{ 'steps.filter.outputs." + service.name + "' }}"
+            [service.name]: "${{ steps.filter.outputs." + service.name + " }}"
             for service in services
         },
         steps: [
@@ -102,7 +102,7 @@ jobs : {
      [dependency]: {
        "runs-on": [ "self-hosted" ],
        needs: "changes",
-       "if": "${{github.event.inputs.build == '" + dependency + "' || 'needs.changes.outputs." + dependency + "' == 'true' && always() }}",
+       "if": "${{github.event.inputs.build == '" + dependency + "' || needs.changes.outputs." + dependency + " == 'true' && always() }}",
        env: {
          SERVICE_NAME: dependency,
          IMAGE: "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/" + dependency + ":latest"
@@ -119,7 +119,7 @@ jobs : {
     [service.name]: {
       "runs-on": [ "self-hosted" ],
       needs:  [ "changes" ] + service.dependsOn,
-      "if": "${{github.event.inputs.build == '" + service.name + "' || ('needs.changes.outputs." + service.name + "' == 'true'" + arrayToString(service.dependsOn) + ") && always() }}",
+      "if": "${{github.event.inputs.build == '" + service.name + "' || (needs.changes.outputs." + service.name + " == 'true'" + arrayToString(service.dependsOn) + ") && always() }}",
       env: {
         SERVICE_NAME: service.name,
         IMAGE: "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/" + service.name + ":latest"

@@ -1,0 +1,1 @@
+FROM paketobuildpacks/builder-jammy-base:0_4_278
