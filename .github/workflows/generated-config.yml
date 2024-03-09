@@ -23,16 +23,16 @@
       - "run": "docker push $IMAGE"
   "changes":
     "outputs":
-      "builder-jammy-base-0.4.278": "${{ steps.filter.outputs.builder-jammy-base-0.4.278 }}"
-      "docker--25": "${{ steps.filter.outputs.docker--25 }}"
-      "docker-25": "${{ steps.filter.outputs.docker-25 }}"
-      "minio-release_2024-02-24t17-11-14z": "${{ steps.filter.outputs.minio-release_2024-02-24t17-11-14z }}"
-      "minio__minio--release_2024-02-24t17-11-14z": "${{ steps.filter.outputs.minio__minio--release_2024-02-24t17-11-14z }}"
-      "paketobuildpacks__builder-jammy-base--0.4.278": "${{ steps.filter.outputs.paketobuildpacks__builder-jammy-base--0.4.278 }}"
-      "paketobuildpacks__run-jammy-base--0.1.105": "${{ steps.filter.outputs.paketobuildpacks__run-jammy-base--0.1.105 }}"
-      "postgres--16": "${{ steps.filter.outputs.postgres--16 }}"
-      "postgres-16": "${{ steps.filter.outputs.postgres-16 }}"
-      "run-jammy-base-0.1.105": "${{ steps.filter.outputs.run-jammy-base-0.1.105 }}"
+      "builder-jammy-base-0.4.278": "${{ 'steps.filter.outputs.builder-jammy-base-0.4.278' }}"
+      "docker--25": "${{ 'steps.filter.outputs.docker--25' }}"
+      "docker-25": "${{ 'steps.filter.outputs.docker-25' }}"
+      "minio-release_2024-02-24t17-11-14z": "${{ 'steps.filter.outputs.minio-release_2024-02-24t17-11-14z' }}"
+      "minio__minio--release_2024-02-24t17-11-14z": "${{ 'steps.filter.outputs.minio__minio--release_2024-02-24t17-11-14z' }}"
+      "paketobuildpacks__builder-jammy-base--0.4.278": "${{ 'steps.filter.outputs.paketobuildpacks__builder-jammy-base--0.4.278' }}"
+      "paketobuildpacks__run-jammy-base--0.1.105": "${{ 'steps.filter.outputs.paketobuildpacks__run-jammy-base--0.1.105' }}"
+      "postgres--16": "${{ 'steps.filter.outputs.postgres--16' }}"
+      "postgres-16": "${{ 'steps.filter.outputs.postgres-16' }}"
+      "run-jammy-base-0.1.105": "${{ 'steps.filter.outputs.run-jammy-base-0.1.105' }}"
     "permissions":
       "pull-requests": "read"
     "runs-on":
