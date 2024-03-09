@@ -5,14 +5,33 @@
   "DOCKER_REPO_URL_LOGIN": "${{ vars.DOCKER_REPO_URL_LOGIN }}"
   "DOCKER_REPO_USERNAME": "${{ secrets.DOCKER_REPO_USERNAME }}"
 "jobs":
+  "builder-jammy-base-0.4.278":
+    "env":
+      "IMAGE": "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/builder-jammy-base-0.4.278:latest"
+      "SERVICE_NAME": "builder-jammy-base-0.4.278"
+    "if": "${{github.event.inputs.build == 'builder-jammy-base-0.4.278' || (needs.changes.outputs.builder-jammy-base-0.4.278 == 'true' || needs.changes.outputs.paketobuildpacks__run-jammy-base--0.1.105 == 'true') && always() }}"
+    "needs":
+      - "changes"
+      - "paketobuildpacks__run-jammy-base--0.1.105"
+    "runs-on":
+      - "self-hosted"
+    "steps":
+      - "uses": "actions/checkout@v3"
+      - "run": "echo $DOCKER_REPO_PASSWORD | docker login $DOCKER_REPO_URL_LOGIN -u $DOCKER_REPO_USERNAME --password-stdin"
+      - "run": "echo builder-jammy-base-0.4.278"
+      - "run": "docker build --build-arg DOCKER_REPO_URL --build-arg CI_PROJECT_NAME -t $IMAGE ./$SERVICE_NAME"
+      - "run": "docker push $IMAGE"
   "changes":
     "outputs":
+      "builder-jammy-base-0.4.278": "${{ steps.filter.outputs.builder-jammy-base-0.4.278 }}"
       "docker--25": "${{ steps.filter.outputs.docker--25 }}"
       "docker-25": "${{ steps.filter.outputs.docker-25 }}"
       "minio-release_2024-02-24t17-11-14z": "${{ steps.filter.outputs.minio-release_2024-02-24t17-11-14z }}"
       "minio__minio--release_2024-02-24t17-11-14z": "${{ steps.filter.outputs.minio__minio--release_2024-02-24t17-11-14z }}"
+      "paketobuildpacks__run-jammy-base--0.1.105": "${{ steps.filter.outputs.paketobuildpacks__run-jammy-base--0.1.105 }}"
       "postgres--16": "${{ steps.filter.outputs.postgres--16 }}"
       "postgres-16": "${{ steps.filter.outputs.postgres-16 }}"
+      "run-jammy-base-0.1.105": "${{ steps.filter.outputs.run-jammy-base-0.1.105 }}"
     "permissions":
       "pull-requests": "read"
     "runs-on":
@@ -21,7 +40,7 @@
       - "id": "filter"
         "uses": "dorny/paths-filter@v3"
         "with":
-          "filters": "\"docker--25\":\n- \"./init/docker--25/**\"\n\"docker-25\":\n- \"docker-25/**\"\n\"minio-release_2024-02-24t17-11-14z\":\n- \"minio-release_2024-02-24t17-11-14z/**\"\n\"minio__minio--release_2024-02-24t17-11-14z\":\n- \"./init/minio__minio--release_2024-02-24t17-11-14z/**\"\n\"postgres--16\":\n- \"./init/postgres--16/**\"\n\"postgres-16\":\n- \"postgres-16/**\""
+          "filters": "\"builder-jammy-base-0.4.278\":\n- \"builder-jammy-base-0.4.278/**\"\n\"docker--25\":\n- \"./init/docker--25/**\"\n\"docker-25\":\n- \"docker-25/**\"\n\"minio-release_2024-02-24t17-11-14z\":\n- \"minio-release_2024-02-24t17-11-14z/**\"\n\"minio__minio--release_2024-02-24t17-11-14z\":\n- \"./init/minio__minio--release_2024-02-24t17-11-14z/**\"\n\"paketobuildpacks__run-jammy-base--0.1.105\":\n- \"./init/paketobuildpacks__run-jammy-base--0.1.105/**\"\n\"postgres--16\":\n- \"./init/postgres--16/**\"\n\"postgres-16\":\n- \"postgres-16/**\"\n\"run-jammy-base-0.1.105\":\n- \"run-jammy-base-0.1.105/**\""
   "docker--25":
     "env":
       "IMAGE": "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/docker--25:latest"
@@ -82,6 +101,20 @@
       - "run": "echo minio__minio--release_2024-02-24t17-11-14z"
       - "run": "docker build --build-arg DOCKER_REPO_URL --build-arg CI_PROJECT_NAME -t $IMAGE ./init/$SERVICE_NAME"
       - "run": "docker push $IMAGE"
+  "paketobuildpacks__run-jammy-base--0.1.105":
+    "env":
+      "IMAGE": "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/paketobuildpacks__run-jammy-base--0.1.105:latest"
+      "SERVICE_NAME": "paketobuildpacks__run-jammy-base--0.1.105"
+    "if": "${{github.event.inputs.build == 'paketobuildpacks__run-jammy-base--0.1.105' || needs.changes.outputs.paketobuildpacks__run-jammy-base--0.1.105 == 'true' && always() }}"
+    "needs": "changes"
+    "runs-on":
+      - "self-hosted"
+    "steps":
+      - "uses": "actions/checkout@v3"
+      - "run": "echo $DOCKER_REPO_PASSWORD | docker login $DOCKER_REPO_URL_LOGIN -u $DOCKER_REPO_USERNAME --password-stdin"
+      - "run": "echo paketobuildpacks__run-jammy-base--0.1.105"
+      - "run": "docker build --build-arg DOCKER_REPO_URL --build-arg CI_PROJECT_NAME -t $IMAGE ./init/$SERVICE_NAME"
+      - "run": "docker push $IMAGE"
   "postgres--16":
     "env":
       "IMAGE": "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/postgres--16:latest"
@@ -112,6 +145,22 @@
       - "run": "echo postgres-16"
       - "run": "docker build --build-arg DOCKER_REPO_URL --build-arg CI_PROJECT_NAME -t $IMAGE ./$SERVICE_NAME"
       - "run": "docker push $IMAGE"
+  "run-jammy-base-0.1.105":
+    "env":
+      "IMAGE": "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/run-jammy-base-0.1.105:latest"
+      "SERVICE_NAME": "run-jammy-base-0.1.105"
+    "if": "${{github.event.inputs.build == 'run-jammy-base-0.1.105' || (needs.changes.outputs.run-jammy-base-0.1.105 == 'true' || needs.changes.outputs.paketobuildpacks__run-jammy-base--0.1.105 == 'true') && always() }}"
+    "needs":
+      - "changes"
+      - "paketobuildpacks__run-jammy-base--0.1.105"
+    "runs-on":
+      - "self-hosted"
+    "steps":
+      - "uses": "actions/checkout@v3"
+      - "run": "echo $DOCKER_REPO_PASSWORD | docker login $DOCKER_REPO_URL_LOGIN -u $DOCKER_REPO_USERNAME --password-stdin"
+      - "run": "echo run-jammy-base-0.1.105"
+      - "run": "docker build --build-arg DOCKER_REPO_URL --build-arg CI_PROJECT_NAME -t $IMAGE ./$SERVICE_NAME"
+      - "run": "docker push $IMAGE"
 "name": "Create and publish a Docker image"
 "on":
   "pull_request":
@@ -128,8 +177,11 @@
           - "docker-25"
           - "minio-release_2024-02-24t17-11-14z"
           - "postgres-16"
+          - "builder-jammy-base-0.4.278"
+          - "run-jammy-base-0.1.105"
           - "docker--25"
           - "minio__minio--release_2024-02-24t17-11-14z"
+          - "paketobuildpacks__run-jammy-base--0.1.105"
           - "postgres--16"
         "type": "choice"
   "workflow_run":
