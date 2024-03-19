@@ -93,7 +93,7 @@ jobs : {
         },
         steps: [
             {
-                uses: "dorny/paths-filter@v3",
+                uses: "dorny/paths-filter@v2",
                 id: "filter",
                 with: {
                     filters: filters,
