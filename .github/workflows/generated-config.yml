@@ -39,7 +39,7 @@
       - "self-hosted"
     "steps":
       - "id": "filter"
-        "uses": "dorny/paths-filter@v3"
+        "uses": "dorny/paths-filter@v2"
         "with":
           "filters": "\"builder-jammy-base-0_4_278\":\n- \"builder-jammy-base-0_4_278/**\"\n\"docker--25\":\n- \"./init/docker--25/**\"\n\"docker-25\":\n- \"docker-25/**\"\n\"minio-release_2024-02-24t17-11-14z\":\n- \"minio-release_2024-02-24t17-11-14z/**\"\n\"minio__minio--release_2024-02-24t17-11-14z\":\n- \"./init/minio__minio--release_2024-02-24t17-11-14z/**\"\n\"paketobuildpacks__builder-jammy-base--0_4_278\":\n- \"./init/paketobuildpacks__builder-jammy-base--0_4_278/**\"\n\"paketobuildpacks__run-jammy-base--0_1_105\":\n- \"./init/paketobuildpacks__run-jammy-base--0_1_105/**\"\n\"postgres--16\":\n- \"./init/postgres--16/**\"\n\"postgres-16\":\n- \"postgres-16/**\"\n\"run-jammy-base-0_1_105\":\n- \"run-jammy-base-0_1_105/**\""
   "docker--25":
