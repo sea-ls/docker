@@ -4,6 +4,7 @@
 local services = [
   { name: "docker-25", dependsOn: [ "docker--25" ] },
   { name: "minio-release_2024-02-24t17-11-14z", dependsOn: [ "minio__minio--release_2024-02-24t17-11-14z" ] },
+  { name: "postgres-13", dependsOn: [ "postgres--13" ] },
   { name: "postgres-16", dependsOn: [ "postgres--16" ] },
   { name: "builder-jammy-base-0_4_278", dependsOn: [ "paketobuildpacks__builder-jammy-base--0_4_278" ] },
   { name: "run-jammy-base-0_1_105", dependsOn: [ "paketobuildpacks__run-jammy-base--0_1_105" ] },
