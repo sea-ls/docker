@@ -30,8 +30,10 @@
       "minio__minio--release_2024-02-24t17-11-14z": "${{ steps.filter.outputs.minio__minio--release_2024-02-24t17-11-14z }}"
       "paketobuildpacks__builder-jammy-base--0_4_278": "${{ steps.filter.outputs.paketobuildpacks__builder-jammy-base--0_4_278 }}"
       "paketobuildpacks__run-jammy-base--0_1_105": "${{ steps.filter.outputs.paketobuildpacks__run-jammy-base--0_1_105 }}"
+      "postgres--12-alpine": "${{ steps.filter.outputs.postgres--12-alpine }}"
       "postgres--13": "${{ steps.filter.outputs.postgres--13 }}"
       "postgres--16": "${{ steps.filter.outputs.postgres--16 }}"
+      "postgres-12-alpine": "${{ steps.filter.outputs.postgres-12-alpine }}"
       "postgres-13": "${{ steps.filter.outputs.postgres-13 }}"
       "postgres-16": "${{ steps.filter.outputs.postgres-16 }}"
       "run-jammy-base-0_1_105": "${{ steps.filter.outputs.run-jammy-base-0_1_105 }}"
@@ -43,7 +45,7 @@
       - "id": "filter"
         "uses": "dorny/paths-filter@v2"
         "with":
-          "filters": "\"builder-jammy-base-0_4_278\":\n- \"builder-jammy-base-0_4_278/**\"\n\"docker--25\":\n- \"./init/docker--25/**\"\n\"docker-25\":\n- \"docker-25/**\"\n\"minio-release_2024-02-24t17-11-14z\":\n- \"minio-release_2024-02-24t17-11-14z/**\"\n\"minio__minio--release_2024-02-24t17-11-14z\":\n- \"./init/minio__minio--release_2024-02-24t17-11-14z/**\"\n\"paketobuildpacks__builder-jammy-base--0_4_278\":\n- \"./init/paketobuildpacks__builder-jammy-base--0_4_278/**\"\n\"paketobuildpacks__run-jammy-base--0_1_105\":\n- \"./init/paketobuildpacks__run-jammy-base--0_1_105/**\"\n\"postgres--13\":\n- \"./init/postgres--13/**\"\n\"postgres--16\":\n- \"./init/postgres--16/**\"\n\"postgres-13\":\n- \"postgres-13/**\"\n\"postgres-16\":\n- \"postgres-16/**\"\n\"run-jammy-base-0_1_105\":\n- \"run-jammy-base-0_1_105/**\""
+          "filters": "\"builder-jammy-base-0_4_278\":\n- \"builder-jammy-base-0_4_278/**\"\n\"docker--25\":\n- \"./init/docker--25/**\"\n\"docker-25\":\n- \"docker-25/**\"\n\"minio-release_2024-02-24t17-11-14z\":\n- \"minio-release_2024-02-24t17-11-14z/**\"\n\"minio__minio--release_2024-02-24t17-11-14z\":\n- \"./init/minio__minio--release_2024-02-24t17-11-14z/**\"\n\"paketobuildpacks__builder-jammy-base--0_4_278\":\n- \"./init/paketobuildpacks__builder-jammy-base--0_4_278/**\"\n\"paketobuildpacks__run-jammy-base--0_1_105\":\n- \"./init/paketobuildpacks__run-jammy-base--0_1_105/**\"\n\"postgres--12-alpine\":\n- \"postgres--12-alpine/**\"\n\"postgres--13\":\n- \"./init/postgres--13/**\"\n\"postgres--16\":\n- \"./init/postgres--16/**\"\n\"postgres-12-alpine\":\n- \"./init/postgres-12-alpine/**\"\n\"postgres-13\":\n- \"postgres-13/**\"\n\"postgres-16\":\n- \"postgres-16/**\"\n\"run-jammy-base-0_1_105\":\n- \"run-jammy-base-0_1_105/**\""
   "docker--25":
     "env":
       "IMAGE": "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/docker--25:latest"
@@ -132,6 +134,22 @@
       - "run": "echo paketobuildpacks__run-jammy-base--0_1_105"
       - "run": "docker build --build-arg DOCKER_REPO_URL --build-arg CI_PROJECT_NAME -t $IMAGE ./init/$SERVICE_NAME"
       - "run": "docker push $IMAGE"
+  "postgres--12-alpine":
+    "env":
+      "IMAGE": "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/postgres--12-alpine:latest"
+      "SERVICE_NAME": "postgres--12-alpine"
+    "if": "${{ github.event.inputs.build == 'postgres--12-alpine' || (needs.changes.outputs.postgres--12-alpine == 'true' || needs.changes.outputs.postgres-12-alpine == 'true') && always() }}"
+    "needs":
+      - "changes"
+      - "postgres-12-alpine"
+    "runs-on":
+      - "self-hosted"
+    "steps":
+      - "uses": "actions/checkout@v3"
+      - "run": "echo $DOCKER_REPO_PASSWORD | docker login $DOCKER_REPO_URL_LOGIN -u $DOCKER_REPO_USERNAME --password-stdin"
+      - "run": "echo postgres--12-alpine"
+      - "run": "docker build --build-arg DOCKER_REPO_URL --build-arg CI_PROJECT_NAME -t $IMAGE ./$SERVICE_NAME"
+      - "run": "docker push $IMAGE"
   "postgres--13":
     "env":
       "IMAGE": "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/postgres--13:latest"
@@ -158,6 +176,20 @@
       - "uses": "actions/checkout@v3"
       - "run": "echo $DOCKER_REPO_PASSWORD | docker login $DOCKER_REPO_URL_LOGIN -u $DOCKER_REPO_USERNAME --password-stdin"
       - "run": "echo postgres--16"
+      - "run": "docker build --build-arg DOCKER_REPO_URL --build-arg CI_PROJECT_NAME -t $IMAGE ./init/$SERVICE_NAME"
+      - "run": "docker push $IMAGE"
+  "postgres-12-alpine":
+    "env":
+      "IMAGE": "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/postgres-12-alpine:latest"
+      "SERVICE_NAME": "postgres-12-alpine"
+    "if": "${{ github.event.inputs.build == 'postgres-12-alpine' || needs.changes.outputs.postgres-12-alpine == 'true' && always() }}"
+    "needs": "changes"
+    "runs-on":
+      - "self-hosted"
+    "steps":
+      - "uses": "actions/checkout@v3"
+      - "run": "echo $DOCKER_REPO_PASSWORD | docker login $DOCKER_REPO_URL_LOGIN -u $DOCKER_REPO_USERNAME --password-stdin"
+      - "run": "echo postgres-12-alpine"
       - "run": "docker build --build-arg DOCKER_REPO_URL --build-arg CI_PROJECT_NAME -t $IMAGE ./init/$SERVICE_NAME"
       - "run": "docker push $IMAGE"
   "postgres-13":
@@ -223,6 +255,7 @@
         "options":
           - "docker-25"
           - "minio-release_2024-02-24t17-11-14z"
+          - "postgres--12-alpine"
           - "postgres-13"
           - "postgres-16"
           - "builder-jammy-base-0_4_278"
@@ -233,6 +266,7 @@
           - "paketobuildpacks__run-jammy-base--0_1_105"
           - "postgres--13"
           - "postgres--16"
+          - "postgres-12-alpine"
         "type": "choice"
   "workflow_run":
     "types":
