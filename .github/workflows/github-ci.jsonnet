@@ -46,9 +46,9 @@ local arrayToString2(arr) =
   local aux(arr, index) =
     local elem = std.escapeStringJson(arr[index]);
     if index == std.length(arr) - 1 then
-       " || github.event.inputs.build == '%s'".format(elem)
+       " || github.event.inputs.build == '" + elem + "'"
     else
-      " github.event.inputs.build == '%s'".format(elem)
+      " github.event.inputs.build == '" + elem + "'"
   ;
   aux(arr, 0);
 
@@ -136,7 +136,7 @@ jobs : {
     [service.name]: {
       "runs-on": [ "self-hosted" ],
       needs:  [ "changes" ] + service.dependsOn,
-      "if": "${{ github.event.inputs.build == '" + service.name + "' || (needs.changes.outputs." + service.name + " == 'true'" + arrayToString(service.dependsOn) + arrayToString2(service.dependsOn) + ") && always() }}",
+      "if": "${{ github.event.inputs.build == '" + service.name + "' || (needs.changes.outputs." + service.name + " == 'true'" + arrayToString(service.dependsOn) +  ") || (" + arrayToString2(service.dependsOn) + ") && always() }}",
       env: {
         SERVICE_NAME: service.name,
         IMAGE: "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/" + service.name + ":latest"
