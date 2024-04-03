@@ -55,6 +55,7 @@ local gitlabci = {
                 options: [
                    service.name for service in services
                 ] +  [
+
                     dependency for dependency in dependencies
                 ],
             },
@@ -80,10 +81,9 @@ local gitlabci = {
     },
 } + {
 jobs : {
+     "if": "${{ github.event.inputs.build != '' && always() }}",
      changes: {
         "runs-on": [ "self-hosted" ],
-
-       "if": "${{ github.event.inputs.build != '' && always() }}",
        # Required permissions
         permissions:{
             "pull-requests": "read"
