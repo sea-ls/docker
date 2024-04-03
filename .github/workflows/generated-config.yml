@@ -22,7 +22,7 @@
       - "run": "docker build --build-arg DOCKER_REPO_URL --build-arg CI_PROJECT_NAME -t $IMAGE ./$SERVICE_NAME"
       - "run": "docker push $IMAGE"
   "changes":
-    "if": "${{ github.event.inputs.build != ''}}"
+    "if": "${{ github.event.inputs.build == null}}"
     "outputs":
       "builder-jammy-base-0_4_278": "${{ steps.filter.outputs.builder-jammy-base-0_4_278 }}"
       "docker--25": "${{ steps.filter.outputs.docker--25 }}"
