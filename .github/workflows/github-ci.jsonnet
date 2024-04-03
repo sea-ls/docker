@@ -81,8 +81,8 @@ local gitlabci = {
     },
 } + {
 jobs : {
-     "if": "${{ github.event.inputs.build != '' && always() }}",
      changes: {
+        "if": "${{ github.event.inputs.build != ''}}",
         "runs-on": [ "self-hosted" ],
        # Required permissions
         permissions:{
