@@ -46,7 +46,7 @@ local arrayToString2(arr) =
   local aux(arr, index) =
     local elem = std.escapeStringJson(arr[index]);
     if index == std.length(arr) - 1 then
-       " || github.event.inputs.build == '" + std.strReplace(elem, "\"", "") + "'"
+       " github.event.inputs.build == '" + std.strReplace(elem, "\"", "") + "'"
     else
       " github.event.inputs.build == '" + std.strReplace(elem, "\"", "") + "'"
   ;
