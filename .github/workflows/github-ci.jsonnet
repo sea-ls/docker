@@ -32,9 +32,9 @@ local arrayToString(arr) =
     // to serialize them (e.g. toString or manifestJson).
     local elem = std.escapeStringJson(arr[index]);
     if index == std.length(arr) - 1 then
-       " || needs.changes.outputs." + std.strReplace(elem, "\"", "") + " == 'true'"
+        std.format(" || needs.changes.outputs.%s == 'true'", [std.strReplace(elem, "\"", "")])
     else
-      elem + " || needs.changes.outputs." +  std.strReplace(aux(arr, index + 1)) + " == 'true'"
+        elem + std.format(" || needs.changes.outputs.%s == 'true'", [std.strReplace(aux(arr, index + 1))])
   ;
   aux(arr, 0);
 
@@ -43,9 +43,8 @@ local arrayToString2(arr) =
     local elem = std.escapeStringJson(arr[index]);
     if index == std.length(arr) - 1 then
         std.format(" github.event.inputs.build == '%s' ", [std.strReplace(elem, "\"", "")])
-       //" github.event.inputs.build == '" + std.strReplace(elem, "\"", "") + "'"
     else
-      " github.event.inputs.build == '" + std.strReplace(elem, "\"", "") + "'"
+        std.format(" github.event.inputs.build == '%s' ", [std.strReplace(elem, "\"", "")])
   ;
   aux(arr, 0);
 
@@ -116,7 +115,7 @@ jobs : {
      [dependency]: {
        "runs-on": [ "self-hosted" ],
        needs: "changes",
-       "if": "${{ github.event.inputs.build == '" + dependency + "' || needs.changes.outputs." + dependency + " == 'true' && always() }}",
+       "if": std.format("${{ github.event.inputs.build == '%s' || needs.changes.outputs.%s == 'true' && always() }}", [dependecy, dependency]),
        env: {
          SERVICE_NAME: dependency,
          IMAGE: "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/" + dependency + ":latest"
@@ -133,7 +132,7 @@ jobs : {
     [service.name]: {
       "runs-on": [ "self-hosted" ],
       needs:  [ "changes" ] + service.dependsOn,
-      "if": "${{ github.event.inputs.build == '" + service.name + "' || (needs.changes.outputs." + service.name + " == 'true'" + arrayToString(service.dependsOn) +  ") || (" + arrayToString2(service.dependsOn) + ") && always() }}",
+      "if": std.format("${{ github.event.inputs.build == '%s' || (needs.changes.outputs.%s == 'true'%s) || (%s) && always() }}", [service.name, service.name, arrayToString(service.dependsOn), arrayToString2(service.dependsOn)]),
       env: {
         SERVICE_NAME: service.name,
         IMAGE: "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/" + service.name + ":latest"
