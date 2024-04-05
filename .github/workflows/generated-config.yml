@@ -27,6 +27,8 @@
       "builder-jammy-base-0_4_278": "${{ steps.filter.outputs.builder-jammy-base-0_4_278 }}"
       "docker--25": "${{ steps.filter.outputs.docker--25 }}"
       "docker-25": "${{ steps.filter.outputs.docker-25 }}"
+      "keycloak-24_0": "${{ steps.filter.outputs.keycloak-24_0 }}"
+      "keycloak__keycloak--24_0": "${{ steps.filter.outputs.keycloak__keycloak--24_0 }}"
       "minio-release_2024-02-24t17-11-14z": "${{ steps.filter.outputs.minio-release_2024-02-24t17-11-14z }}"
       "minio__minio--release_2024-02-24t17-11-14z": "${{ steps.filter.outputs.minio__minio--release_2024-02-24t17-11-14z }}"
       "paketobuildpacks__builder-jammy-base--0_4_278": "${{ steps.filter.outputs.paketobuildpacks__builder-jammy-base--0_4_278 }}"
@@ -42,7 +44,7 @@
       - "id": "filter"
         "uses": "dorny/paths-filter@v2"
         "with":
-          "filters": "\"builder-jammy-base-0_4_278\":\n- \"builder-jammy-base-0_4_278/**\"\n\"docker--25\":\n- \"./init/docker--25/**\"\n\"docker-25\":\n- \"docker-25/**\"\n\"minio-release_2024-02-24t17-11-14z\":\n- \"minio-release_2024-02-24t17-11-14z/**\"\n\"minio__minio--release_2024-02-24t17-11-14z\":\n- \"./init/minio__minio--release_2024-02-24t17-11-14z/**\"\n\"paketobuildpacks__builder-jammy-base--0_4_278\":\n- \"./init/paketobuildpacks__builder-jammy-base--0_4_278/**\"\n\"paketobuildpacks__run-jammy-base--0_1_105\":\n- \"./init/paketobuildpacks__run-jammy-base--0_1_105/**\"\n\"postgres--12-alpine\":\n- \"./init/postgres--12-alpine/**\"\n\"postgres-12-alpine\":\n- \"postgres-12-alpine/**\"\n\"run-jammy-base-0_1_105\":\n- \"run-jammy-base-0_1_105/**\""
+          "filters": "\"builder-jammy-base-0_4_278\":\n- \"builder-jammy-base-0_4_278/**\"\n\"docker--25\":\n- \"./init/docker--25/**\"\n\"docker-25\":\n- \"docker-25/**\"\n\"keycloak-24_0\":\n- \"keycloak-24_0/**\"\n\"keycloak__keycloak--24_0\":\n- \"./init/keycloak__keycloak--24_0/**\"\n\"minio-release_2024-02-24t17-11-14z\":\n- \"minio-release_2024-02-24t17-11-14z/**\"\n\"minio__minio--release_2024-02-24t17-11-14z\":\n- \"./init/minio__minio--release_2024-02-24t17-11-14z/**\"\n\"paketobuildpacks__builder-jammy-base--0_4_278\":\n- \"./init/paketobuildpacks__builder-jammy-base--0_4_278/**\"\n\"paketobuildpacks__run-jammy-base--0_1_105\":\n- \"./init/paketobuildpacks__run-jammy-base--0_1_105/**\"\n\"postgres--12-alpine\":\n- \"./init/postgres--12-alpine/**\"\n\"postgres-12-alpine\":\n- \"postgres-12-alpine/**\"\n\"run-jammy-base-0_1_105\":\n- \"run-jammy-base-0_1_105/**\""
   "docker--25":
     "env":
       "IMAGE": "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/docker--25:latest"
@@ -72,6 +74,36 @@
       - "run": "echo $DOCKER_REPO_PASSWORD | docker login $DOCKER_REPO_URL_LOGIN -u $DOCKER_REPO_USERNAME --password-stdin"
       - "run": "echo docker-25"
       - "run": "docker build --build-arg DOCKER_REPO_URL --build-arg CI_PROJECT_NAME -t $IMAGE ./$SERVICE_NAME"
+      - "run": "docker push $IMAGE"
+  "keycloak-24_0":
+    "env":
+      "IMAGE": "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/keycloak-24_0:latest"
+      "SERVICE_NAME": "keycloak-24_0"
+    "if": "${{ github.event.inputs.build == 'keycloak-24_0' || (needs.changes.outputs.keycloak-24_0 == 'true' || needs.changes.outputs.keycloak__keycloak--24_0 == 'true') || ( github.event.inputs.build == 'keycloak__keycloak--24_0' ) && always() }}"
+    "needs":
+      - "changes"
+      - "keycloak__keycloak--24_0"
+    "runs-on":
+      - "self-hosted"
+    "steps":
+      - "uses": "actions/checkout@v3"
+      - "run": "echo $DOCKER_REPO_PASSWORD | docker login $DOCKER_REPO_URL_LOGIN -u $DOCKER_REPO_USERNAME --password-stdin"
+      - "run": "echo keycloak-24_0"
+      - "run": "docker build --build-arg DOCKER_REPO_URL --build-arg CI_PROJECT_NAME -t $IMAGE ./$SERVICE_NAME"
+      - "run": "docker push $IMAGE"
+  "keycloak__keycloak--24_0":
+    "env":
+      "IMAGE": "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/keycloak__keycloak--24_0:latest"
+      "SERVICE_NAME": "keycloak__keycloak--24_0"
+    "if": "${{ github.event.inputs.build == 'keycloak__keycloak--24_0' || needs.changes.outputs.keycloak__keycloak--24_0 == 'true' && always() }}"
+    "needs": "changes"
+    "runs-on":
+      - "self-hosted"
+    "steps":
+      - "uses": "actions/checkout@v3"
+      - "run": "echo $DOCKER_REPO_PASSWORD | docker login $DOCKER_REPO_URL_LOGIN -u $DOCKER_REPO_USERNAME --password-stdin"
+      - "run": "echo keycloak__keycloak--24_0"
+      - "run": "docker build --build-arg DOCKER_REPO_URL --build-arg CI_PROJECT_NAME -t $IMAGE ./init/$SERVICE_NAME"
       - "run": "docker push $IMAGE"
   "minio-release_2024-02-24t17-11-14z":
     "env":
@@ -195,7 +227,9 @@
           - "postgres-12-alpine"
           - "builder-jammy-base-0_4_278"
           - "run-jammy-base-0_1_105"
+          - "keycloak-24_0"
           - "docker--25"
+          - "keycloak__keycloak--24_0"
           - "minio__minio--release_2024-02-24t17-11-14z"
           - "paketobuildpacks__builder-jammy-base--0_4_278"
           - "paketobuildpacks__run-jammy-base--0_1_105"
