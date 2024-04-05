@@ -2,8 +2,8 @@ local services = [
   { name: "docker-25", dependsOn: [ "docker--25" ] },
   { name: "minio-release_2024-02-24t17-11-14z", dependsOn: [ "minio__minio--release_2024-02-24t17-11-14z" ] },
   { name: "postgres-12-alpine", dependsOn: [ "postgres--12-alpine" ] },
-  { name: "builder-jammy-base-0_4_278", dependsOn: [ "paketobuildpacks__builder-jammy-base--0_4_278" ] },
-  { name: "run-jammy-base-0_1_105", dependsOn: [ "paketobuildpacks__run-jammy-base--0_1_105" ] },
+  { name: "builder-jammy-base-0.4.278", dependsOn: [ "paketobuildpacks__builder-jammy-base--0.4.278" ] },
+  { name: "run-jammy-base-0.1.105", dependsOn: [ "paketobuildpacks__run-jammy-base--0.1.105" ] },
 ];
 
 local dependencies = std.set(std.flattenArrays([
