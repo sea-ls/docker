@@ -114,7 +114,7 @@ jobs : {
         ],
      }
     } + {
-     [dependency]: {
+     [std.strReplace(dependency, ".", "_")]: {
        "runs-on": [ "self-hosted" ],
        needs: "changes",
        "if": std.format("${{ github.event.inputs.build == '%s' || 'needs.changes.outputs.%s' == 'true' && always() }}", [dependency, dependency]),
@@ -131,7 +131,7 @@ jobs : {
        ],
      }, for dependency in dependencies
  }  + {
-    [service.name]: {
+    [std.strReplace(service.name, ".", "_")]: {
       "runs-on": [ "self-hosted" ],
       needs:  [ "changes" ] + service.dependsOn,
       "if": std.format("${{ github.event.inputs.build == '%s' || ('needs.changes.outputs.%s' == 'true'%s) || (%s) && always() }}", [service.name, service.name, arrayToString(service.dependsOn), arrayToString2(service.dependsOn)]),
