@@ -79,7 +79,7 @@
     "env":
       "IMAGE": "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/keycloak-24.0:latest"
       "SERVICE_NAME": "keycloak-24.0"
-    "if": "${{ github.event.inputs.build == 'keycloak-24.0' || (needs.changes.outputs.keycloak-24.0 == 'true' || needs.changes.outputs.keycloak__keycloak--24_0 == 'true') || ( github.event.inputs.build == 'keycloak__keycloak--24_0' ) && always() }}"
+    "if": "${{ github.event.inputs.build == 'keycloak-24.0' || ('needs.changes.outputs.keycloak-24.0' == 'true' || 'needs.changes.outputs.keycloak__keycloak--24_0' == 'true') || ( github.event.inputs.build == 'keycloak__keycloak--24_0' ) && always() }}"
     "needs":
       - "changes"
       - "keycloak__keycloak--24_0"
