@@ -115,7 +115,7 @@ jobs : {
      [dependency]: {
        "runs-on": [ "self-hosted" ],
        needs: "changes",
-       "if": std.format("${{ github.event.inputs.build == '%s' || needs.changes.outputs.%s == 'true' && always() }}", [dependecy, dependency]),
+       "if": std.format("${{ github.event.inputs.build == '%s' || needs.changes.outputs.%s == 'true' && always() }}", [dependency, dependency]),
        env: {
          SERVICE_NAME: dependency,
          IMAGE: "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/" + dependency + ":latest"
