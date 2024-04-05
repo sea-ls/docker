@@ -34,9 +34,9 @@ local arrayToString(arr) =
     // to serialize them (e.g. toString or manifestJson).
     local elem = std.escapeStringJson(arr[index]);
     if index == std.length(arr) - 1 then
-        std.format(" || needs.changes.outputs.%s == 'true'", [std.strReplace(elem, "\"", "")])
+        std.format(" || 'needs.changes.outputs.%s' == 'true'", [std.strReplace(elem, "\"", "")])
     else
-        elem + std.format(" || needs.changes.outputs.%s == 'true'", [std.strReplace(aux(arr, index + 1))])
+        elem + std.format(" || 'needs.changes.outputs.%s' == 'true'", [std.strReplace(aux(arr, index + 1))])
   ;
   aux(arr, 0);
 
@@ -117,7 +117,7 @@ jobs : {
      [dependency]: {
        "runs-on": [ "self-hosted" ],
        needs: "changes",
-       "if": std.format("${{ github.event.inputs.build == '%s' || needs.changes.outputs.%s == 'true' && always() }}", [dependency, dependency]),
+       "if": std.format("${{ github.event.inputs.build == '%s' || 'needs.changes.outputs.%s' == 'true' && always() }}", [dependency, dependency]),
        env: {
          SERVICE_NAME: dependency,
          IMAGE: "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/" + dependency + ":latest"
@@ -134,7 +134,7 @@ jobs : {
     [service.name]: {
       "runs-on": [ "self-hosted" ],
       needs:  [ "changes" ] + service.dependsOn,
-      "if": std.format("${{ github.event.inputs.build == '%s' || (needs.changes.outputs.%s == 'true'%s) || (%s) && always() }}", [service.name, service.name, arrayToString(service.dependsOn), arrayToString2(service.dependsOn)]),
+      "if": std.format("${{ github.event.inputs.build == '%s' || ('needs.changes.outputs.%s' == 'true'%s) || (%s) && always() }}", [service.name, service.name, arrayToString(service.dependsOn), arrayToString2(service.dependsOn)]),
       env: {
         SERVICE_NAME: service.name,
         IMAGE: "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/" + service.name + ":latest"
