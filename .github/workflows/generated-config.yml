@@ -9,7 +9,7 @@
     "env":
       "IMAGE": "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/builder-jammy-base-0_4_278:latest"
       "SERVICE_NAME": "builder-jammy-base-0_4_278"
-    "if": "${{ github.event.inputs.build == 'builder-jammy-base-0_4_278' || (needs.changes.outputs.builder-jammy-base-0_4_278 == 'true' || needs.changes.outputs.paketobuildpacks__builder-jammy-base--0_4_278 == 'true') || ( github.event.inputs.build == 'paketobuildpacks__builder-jammy-base--0_4_278' ) && always() }}"
+    "if": "${{ github.event.inputs.build == 'builder-jammy-base-0_4_278' || ('needs.changes.outputs.builder-jammy-base-0_4_278' == 'true' || 'needs.changes.outputs.paketobuildpacks__builder-jammy-base--0_4_278' == 'true') || ( github.event.inputs.build == 'paketobuildpacks__builder-jammy-base--0_4_278' ) && always() }}"
     "needs":
       - "changes"
       - "paketobuildpacks__builder-jammy-base--0_4_278"
@@ -24,18 +24,18 @@
   "changes":
     "if": "${{ github.event.inputs.build == null}}"
     "outputs":
-      "builder-jammy-base-0_4_278": "${{ steps.filter.outputs.builder-jammy-base-0_4_278 }}"
-      "docker--25": "${{ steps.filter.outputs.docker--25 }}"
-      "docker-25": "${{ steps.filter.outputs.docker-25 }}"
-      'keycloak-24.0': "${{ 'steps.filter.outputs.keycloak-24.0' }}"
-      "keycloak__keycloak--24_0": "${{ steps.filter.outputs.keycloak__keycloak--24_0 }}"
-      "minio-release_2024-02-24t17-11-14z": "${{ steps.filter.outputs.minio-release_2024-02-24t17-11-14z }}"
-      "minio__minio--release_2024-02-24t17-11-14z": "${{ steps.filter.outputs.minio__minio--release_2024-02-24t17-11-14z }}"
-      "paketobuildpacks__builder-jammy-base--0_4_278": "${{ steps.filter.outputs.paketobuildpacks__builder-jammy-base--0_4_278 }}"
-      "paketobuildpacks__run-jammy-base--0_1_105": "${{ steps.filter.outputs.paketobuildpacks__run-jammy-base--0_1_105 }}"
-      "postgres--12-alpine": "${{ steps.filter.outputs.postgres--12-alpine }}"
-      "postgres-12-alpine": "${{ steps.filter.outputs.postgres-12-alpine }}"
-      "run-jammy-base-0_1_105": "${{ steps.filter.outputs.run-jammy-base-0_1_105 }}"
+      "builder-jammy-base-0_4_278": "${{ 'steps.filter.outputs.builder-jammy-base-0_4_278' }}"
+      "docker--25": "${{ 'steps.filter.outputs.docker--25' }}"
+      "docker-25": "${{ 'steps.filter.outputs.docker-25' }}"
+      "keycloak-24.0": "${{ 'steps.filter.outputs.keycloak-24.0' }}"
+      "keycloak__keycloak--24_0": "${{ 'steps.filter.outputs.keycloak__keycloak--24_0' }}"
+      "minio-release_2024-02-24t17-11-14z": "${{ 'steps.filter.outputs.minio-release_2024-02-24t17-11-14z' }}"
+      "minio__minio--release_2024-02-24t17-11-14z": "${{ 'steps.filter.outputs.minio__minio--release_2024-02-24t17-11-14z' }}"
+      "paketobuildpacks__builder-jammy-base--0_4_278": "${{ 'steps.filter.outputs.paketobuildpacks__builder-jammy-base--0_4_278' }}"
+      "paketobuildpacks__run-jammy-base--0_1_105": "${{ 'steps.filter.outputs.paketobuildpacks__run-jammy-base--0_1_105' }}"
+      "postgres--12-alpine": "${{ 'steps.filter.outputs.postgres--12-alpine' }}"
+      "postgres-12-alpine": "${{ 'steps.filter.outputs.postgres-12-alpine' }}"
+      "run-jammy-base-0_1_105": "${{ 'steps.filter.outputs.run-jammy-base-0_1_105' }}"
     "permissions":
       "pull-requests": "read"
     "runs-on":
@@ -49,7 +49,7 @@
     "env":
       "IMAGE": "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/docker--25:latest"
       "SERVICE_NAME": "docker--25"
-    "if": "${{ github.event.inputs.build == 'docker--25' || needs.changes.outputs.docker--25 == 'true' && always() }}"
+    "if": "${{ github.event.inputs.build == 'docker--25' || 'needs.changes.outputs.docker--25' == 'true' && always() }}"
     "needs": "changes"
     "runs-on":
       - "self-hosted"
@@ -63,7 +63,7 @@
     "env":
       "IMAGE": "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/docker-25:latest"
       "SERVICE_NAME": "docker-25"
-    "if": "${{ github.event.inputs.build == 'docker-25' || (needs.changes.outputs.docker-25 == 'true' || needs.changes.outputs.docker--25 == 'true') || ( github.event.inputs.build == 'docker--25' ) && always() }}"
+    "if": "${{ github.event.inputs.build == 'docker-25' || ('needs.changes.outputs.docker-25' == 'true' || 'needs.changes.outputs.docker--25' == 'true') || ( github.event.inputs.build == 'docker--25' ) && always() }}"
     "needs":
       - "changes"
       - "docker--25"
@@ -95,7 +95,7 @@
     "env":
       "IMAGE": "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/keycloak__keycloak--24_0:latest"
       "SERVICE_NAME": "keycloak__keycloak--24_0"
-    "if": "${{ github.event.inputs.build == 'keycloak__keycloak--24_0' || needs.changes.outputs.keycloak__keycloak--24_0 == 'true' && always() }}"
+    "if": "${{ github.event.inputs.build == 'keycloak__keycloak--24_0' || 'needs.changes.outputs.keycloak__keycloak--24_0' == 'true' && always() }}"
     "needs": "changes"
     "runs-on":
       - "self-hosted"
@@ -109,7 +109,7 @@
     "env":
       "IMAGE": "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/minio-release_2024-02-24t17-11-14z:latest"
       "SERVICE_NAME": "minio-release_2024-02-24t17-11-14z"
-    "if": "${{ github.event.inputs.build == 'minio-release_2024-02-24t17-11-14z' || (needs.changes.outputs.minio-release_2024-02-24t17-11-14z == 'true' || needs.changes.outputs.minio__minio--release_2024-02-24t17-11-14z == 'true') || ( github.event.inputs.build == 'minio__minio--release_2024-02-24t17-11-14z' ) && always() }}"
+    "if": "${{ github.event.inputs.build == 'minio-release_2024-02-24t17-11-14z' || ('needs.changes.outputs.minio-release_2024-02-24t17-11-14z' == 'true' || 'needs.changes.outputs.minio__minio--release_2024-02-24t17-11-14z' == 'true') || ( github.event.inputs.build == 'minio__minio--release_2024-02-24t17-11-14z' ) && always() }}"
     "needs":
       - "changes"
       - "minio__minio--release_2024-02-24t17-11-14z"
@@ -125,7 +125,7 @@
     "env":
       "IMAGE": "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/minio__minio--release_2024-02-24t17-11-14z:latest"
       "SERVICE_NAME": "minio__minio--release_2024-02-24t17-11-14z"
-    "if": "${{ github.event.inputs.build == 'minio__minio--release_2024-02-24t17-11-14z' || needs.changes.outputs.minio__minio--release_2024-02-24t17-11-14z == 'true' && always() }}"
+    "if": "${{ github.event.inputs.build == 'minio__minio--release_2024-02-24t17-11-14z' || 'needs.changes.outputs.minio__minio--release_2024-02-24t17-11-14z' == 'true' && always() }}"
     "needs": "changes"
     "runs-on":
       - "self-hosted"
@@ -139,7 +139,7 @@
     "env":
       "IMAGE": "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/paketobuildpacks__builder-jammy-base--0_4_278:latest"
       "SERVICE_NAME": "paketobuildpacks__builder-jammy-base--0_4_278"
-    "if": "${{ github.event.inputs.build == 'paketobuildpacks__builder-jammy-base--0_4_278' || needs.changes.outputs.paketobuildpacks__builder-jammy-base--0_4_278 == 'true' && always() }}"
+    "if": "${{ github.event.inputs.build == 'paketobuildpacks__builder-jammy-base--0_4_278' || 'needs.changes.outputs.paketobuildpacks__builder-jammy-base--0_4_278' == 'true' && always() }}"
     "needs": "changes"
     "runs-on":
       - "self-hosted"
@@ -153,7 +153,7 @@
     "env":
       "IMAGE": "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/paketobuildpacks__run-jammy-base--0_1_105:latest"
       "SERVICE_NAME": "paketobuildpacks__run-jammy-base--0_1_105"
-    "if": "${{ github.event.inputs.build == 'paketobuildpacks__run-jammy-base--0_1_105' || needs.changes.outputs.paketobuildpacks__run-jammy-base--0_1_105 == 'true' && always() }}"
+    "if": "${{ github.event.inputs.build == 'paketobuildpacks__run-jammy-base--0_1_105' || 'needs.changes.outputs.paketobuildpacks__run-jammy-base--0_1_105' == 'true' && always() }}"
     "needs": "changes"
     "runs-on":
       - "self-hosted"
@@ -167,7 +167,7 @@
     "env":
       "IMAGE": "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/postgres--12-alpine:latest"
       "SERVICE_NAME": "postgres--12-alpine"
-    "if": "${{ github.event.inputs.build == 'postgres--12-alpine' || needs.changes.outputs.postgres--12-alpine == 'true' && always() }}"
+    "if": "${{ github.event.inputs.build == 'postgres--12-alpine' || 'needs.changes.outputs.postgres--12-alpine' == 'true' && always() }}"
     "needs": "changes"
     "runs-on":
       - "self-hosted"
@@ -181,7 +181,7 @@
     "env":
       "IMAGE": "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/postgres-12-alpine:latest"
       "SERVICE_NAME": "postgres-12-alpine"
-    "if": "${{ github.event.inputs.build == 'postgres-12-alpine' || (needs.changes.outputs.postgres-12-alpine == 'true' || needs.changes.outputs.postgres--12-alpine == 'true') || ( github.event.inputs.build == 'postgres--12-alpine' ) && always() }}"
+    "if": "${{ github.event.inputs.build == 'postgres-12-alpine' || ('needs.changes.outputs.postgres-12-alpine' == 'true' || 'needs.changes.outputs.postgres--12-alpine' == 'true') || ( github.event.inputs.build == 'postgres--12-alpine' ) && always() }}"
     "needs":
       - "changes"
       - "postgres--12-alpine"
@@ -197,7 +197,7 @@
     "env":
       "IMAGE": "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/run-jammy-base-0_1_105:latest"
       "SERVICE_NAME": "run-jammy-base-0_1_105"
-    "if": "${{ github.event.inputs.build == 'run-jammy-base-0_1_105' || (needs.changes.outputs.run-jammy-base-0_1_105 == 'true' || needs.changes.outputs.paketobuildpacks__run-jammy-base--0_1_105 == 'true') || ( github.event.inputs.build == 'paketobuildpacks__run-jammy-base--0_1_105' ) && always() }}"
+    "if": "${{ github.event.inputs.build == 'run-jammy-base-0_1_105' || ('needs.changes.outputs.run-jammy-base-0_1_105' == 'true' || 'needs.changes.outputs.paketobuildpacks__run-jammy-base--0_1_105' == 'true') || ( github.event.inputs.build == 'paketobuildpacks__run-jammy-base--0_1_105' ) && always() }}"
     "needs":
       - "changes"
       - "paketobuildpacks__run-jammy-base--0_1_105"
