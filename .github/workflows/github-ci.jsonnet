@@ -132,7 +132,7 @@ jobs : {
  }  + {
     [std.strReplace(service.name, ".", "_")]: {
       "runs-on": [ "self-hosted" ],
-      needs:  [ "changes" ] + service.dependsOn,
+      needs:  [ "changes" ] + std.strReplace(service.dependsOn, ".", "_"),
       "if": std.format("${{ github.event.inputs.build == '%s' || ('needs.changes.outputs.%s' == 'true'%s) || (%s) && always() }}", [service.name, service.name, arrayToString(service.dependsOn), arrayToString2(service.dependsOn)]),
       env: {
         SERVICE_NAME: service.name,
