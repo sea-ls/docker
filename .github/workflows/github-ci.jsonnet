@@ -4,6 +4,7 @@ local services = [
   { name: "postgres-12-alpine", dependsOn: [ "postgres--12-alpine" ] },
   { name: "builder-jammy-base-0.4.278", dependsOn: [ "paketobuildpacks__builder-jammy-base--0.4.278" ] },
   { name: "run-jammy-base-0.1.105", dependsOn: [ "paketobuildpacks__run-jammy-base--0.1.105" ] },
+  { name: "keycloak-24.0", dependsOn: [ "keycloak__keycloak--24_0" ] },
 ];
 
 local dependencies = std.set(std.flattenArrays([
@@ -32,9 +33,9 @@ local arrayToString(arr) =
     // to serialize them (e.g. toString or manifestJson).
     local elem = std.escapeStringJson(arr[index]);
     if index == std.length(arr) - 1 then
-        std.format(" || needs.changes.outputs.%s == 'true'", [std.strReplace(elem, "\"", "")])
+        std.format(" || 'needs.changes.outputs.%s' == 'true'", [std.strReplace(elem, "\"", "")])
     else
-        elem + std.format(" || needs.changes.outputs.%s == 'true'", [std.strReplace(aux(arr, index + 1))])
+        elem + std.format(" || 'needs.changes.outputs.%s' == 'true'", [std.strReplace(aux(arr, index + 1))])
   ;
   aux(arr, 0);
 
@@ -70,10 +71,10 @@ local gitlabci = {
     pull_request: {
         types: [ "closed" ],
     },
-    workflow_run: {
-        workflows: [ "Create all jobs" ],
-        types: [ "completed" ]
-    },
+    #workflow_run: {
+    #    workflows: [ "Create all jobs" ],
+    #    types: [ "completed" ]
+    #},
     push: {
         "paths-ignore": [ '.github/**' ]
     }
@@ -95,10 +96,10 @@ jobs : {
             "pull-requests": "read"
         },
         outputs: {
-             [dependency]: "${{ steps.filter.outputs." + dependency + " }}"
+             [dependency]: "${{ 'steps.filter.outputs." + dependency + "' }}"
              for dependency in dependencies
         } + {
-            [service.name]: "${{ steps.filter.outputs." + service.name + " }}"
+            [service.name]: "${{ 'steps.filter.outputs." + service.name + "' }}"
             for service in services
         },
         steps: [
@@ -112,10 +113,10 @@ jobs : {
         ],
      }
     } + {
-     [dependency]: {
+     [std.strReplace(dependency, ".", "_")]: {
        "runs-on": [ "self-hosted" ],
        needs: "changes",
-       "if": std.format("${{ github.event.inputs.build == '%s' || needs.changes.outputs.%s == 'true' && always() }}", [dependency, dependency]),
+       "if": std.format("${{ github.event.inputs.build == '%s' || 'needs.changes.outputs.%s' == 'true' && always() }}", [dependency, dependency]),
        env: {
          SERVICE_NAME: dependency,
          IMAGE: "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/" + dependency + ":latest"
@@ -129,10 +130,10 @@ jobs : {
        ],
      }, for dependency in dependencies
  }  + {
-    [service.name]: {
+    [std.strReplace(service.name, ".", "_")]: {
       "runs-on": [ "self-hosted" ],
       needs:  [ "changes" ] + service.dependsOn,
-      "if": std.format("${{ github.event.inputs.build == '%s' || (needs.changes.outputs.%s == 'true'%s) || (%s) && always() }}", [service.name, service.name, arrayToString(service.dependsOn), arrayToString2(service.dependsOn)]),
+      "if": std.format("${{ github.event.inputs.build == '%s' || ('needs.changes.outputs.%s' == 'true'%s) || (%s) && always() }}", [service.name, service.name, arrayToString(service.dependsOn), arrayToString2(service.dependsOn)]),
       env: {
         SERVICE_NAME: service.name,
         IMAGE: "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/" + service.name + ":latest"
