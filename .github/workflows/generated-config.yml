@@ -235,8 +235,3 @@
           - "paketobuildpacks__run-jammy-base--0_1_105"
           - "postgres--12-alpine"
         "type": "choice"
-  "workflow_run":
-    "types":
-      - "completed"
-    "workflows":
-      - "Create all jobs"
