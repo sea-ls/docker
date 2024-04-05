@@ -1,0 +1,1 @@
+FROM keycloak/keycloak:24.0
