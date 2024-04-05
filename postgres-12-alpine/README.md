@@ -1,5 +1,6 @@
 # Образ Postgres-13
 
+
 https://postgrespro.ru/docs/postgrespro/9.5/continuous-archiving
 
 1. В pg_hba.conf было прописано разрешение на репликацию по паролю
