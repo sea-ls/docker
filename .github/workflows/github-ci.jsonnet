@@ -4,7 +4,7 @@ local services = [
   { name: "postgres-12-alpine", dependsOn: [ "postgres--12-alpine" ] },
   { name: "builder-jammy-base-0_4_278", dependsOn: [ "paketobuildpacks__builder-jammy-base--0_4_278" ] },
   { name: "run-jammy-base-0_1_105", dependsOn: [ "paketobuildpacks__run-jammy-base--0_1_105" ] },
-  { name: "keycloak-24.0", dependsOn: [ "keycloak__keycloak--24_0" ] },
+  { name: 'keycloak-24.0', dependsOn: [ "keycloak__keycloak--24_0" ] },
 
 ];
 
@@ -72,10 +72,10 @@ local gitlabci = {
     pull_request: {
         types: [ "closed" ],
     },
-    workflow_run: {
-        workflows: [ "Create all jobs" ],
-        types: [ "completed" ]
-    },
+    #workflow_run: {
+    #    workflows: [ "Create all jobs" ],
+    #    types: [ "completed" ]
+    #},
     push: {
         "paths-ignore": [ '.github/**' ]
     }
