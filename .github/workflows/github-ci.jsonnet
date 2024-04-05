@@ -4,7 +4,7 @@ local services = [
   { name: "postgres-12-alpine", dependsOn: [ "postgres--12-alpine" ] },
   { name: "builder-jammy-base-0.4.278", dependsOn: [ "paketobuildpacks__builder-jammy-base--0.4.278" ] },
   { name: "run-jammy-base-0.1.105", dependsOn: [ "paketobuildpacks__run-jammy-base--0.1.105" ] },
-  { name: "keycloak-24.0", dependsOn: [ "keycloak__keycloak--24.0" ] },
+  { name: "keycloak-23.0", dependsOn: [ "keycloak__keycloak--23.0" ] },
 ];
 
 local dependencies = std.set(std.flattenArrays([
