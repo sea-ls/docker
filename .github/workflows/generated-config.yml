@@ -40,7 +40,7 @@
   "changes":
     "if": "${{ github.event.inputs.build == null}}"
     "outputs":
-      "'keycloak-24.0'": "${{ steps.filter.outputs.'keycloak-24.0' }}"
+      'keycloak-24.0': "${{ steps.filter.outputs.'keycloak-24.0' }}"
       "builder-jammy-base-0_4_278": "${{ steps.filter.outputs.builder-jammy-base-0_4_278 }}"
       "docker--25": "${{ steps.filter.outputs.docker--25 }}"
       "docker-25": "${{ steps.filter.outputs.docker-25 }}"
