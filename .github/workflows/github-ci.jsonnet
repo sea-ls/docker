@@ -4,7 +4,7 @@ local services = [
   { name: "postgres-12-alpine", dependsOn: [ "postgres--12-alpine" ] },
   { name: "builder-jammy-base-0.4.278", dependsOn: [ "paketobuildpacks__builder-jammy-base--0.4.278" ] },
   { name: "run-jammy-base-0.1.105", dependsOn: [ "paketobuildpacks__run-jammy-base--0.1.105" ] },
-  { name: "keycloak-24.0", dependsOn: [ "keycloak__keycloak--24_0" ] },
+  { name: "keycloak-23.0", dependsOn: [ "keycloak__keycloak--23.0" ] },
 ];
 
 local dependencies = std.set(std.flattenArrays([
@@ -132,7 +132,7 @@ jobs : {
  }  + {
     [std.strReplace(service.name, ".", "_")]: {
       "runs-on": [ "self-hosted" ],
-      needs:  [ "changes" ] + service.dependsOn,
+      needs:  [ "changes" ] + std.map(function(x) std.strReplace(x, ".", "_"), service.dependsOn),
       "if": std.format("${{ github.event.inputs.build == '%s' || ('needs.changes.outputs.%s' == 'true'%s) || (%s) && always() }}", [service.name, service.name, arrayToString(service.dependsOn), arrayToString2(service.dependsOn)]),
       env: {
         SERVICE_NAME: service.name,
