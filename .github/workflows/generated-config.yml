@@ -29,8 +29,8 @@
       "docker-25": "${{ 'steps.filter.outputs.docker-25' }}"
       "keycloak-23.0": "${{ 'steps.filter.outputs.keycloak-23.0' }}"
       "keycloak__keycloak--23.0": "${{ 'steps.filter.outputs.keycloak__keycloak--23.0' }}"
-      "minio-release_2024-02-24t17-11-14z": "${{ 'steps.filter.outputs.minio-release_2024-02-24t17-11-14z' }}"
-      "minio__minio--release_2024-02-24t17-11-14z": "${{ 'steps.filter.outputs.minio__minio--release_2024-02-24t17-11-14z' }}"
+      "minio-release_2024-04-06T05-26-02Z": "${{ 'steps.filter.outputs.minio-release_2024-04-06T05-26-02Z' }}"
+      "minio__minio--release_2024-04-06T05-26-02Z": "${{ 'steps.filter.outputs.minio__minio--release_2024-04-06T05-26-02Z' }}"
       "paketobuildpacks__builder-jammy-base--0.4.278": "${{ 'steps.filter.outputs.paketobuildpacks__builder-jammy-base--0.4.278' }}"
       "paketobuildpacks__run-jammy-base--0.1.105": "${{ 'steps.filter.outputs.paketobuildpacks__run-jammy-base--0.1.105' }}"
       "postgres--12-alpine": "${{ 'steps.filter.outputs.postgres--12-alpine' }}"
@@ -44,7 +44,7 @@
       - "id": "filter"
         "uses": "dorny/paths-filter@v2"
         "with":
-          "filters": "\"builder-jammy-base-0.4.278\":\n- \"builder-jammy-base-0.4.278/**\"\n\"docker--25\":\n- \"./init/docker--25/**\"\n\"docker-25\":\n- \"docker-25/**\"\n\"keycloak-23.0\":\n- \"keycloak-23.0/**\"\n\"keycloak__keycloak--23.0\":\n- \"./init/keycloak__keycloak--23.0/**\"\n\"minio-release_2024-02-24t17-11-14z\":\n- \"minio-release_2024-02-24t17-11-14z/**\"\n\"minio__minio--release_2024-02-24t17-11-14z\":\n- \"./init/minio__minio--release_2024-02-24t17-11-14z/**\"\n\"paketobuildpacks__builder-jammy-base--0.4.278\":\n- \"./init/paketobuildpacks__builder-jammy-base--0.4.278/**\"\n\"paketobuildpacks__run-jammy-base--0.1.105\":\n- \"./init/paketobuildpacks__run-jammy-base--0.1.105/**\"\n\"postgres--12-alpine\":\n- \"./init/postgres--12-alpine/**\"\n\"postgres-12-alpine\":\n- \"postgres-12-alpine/**\"\n\"run-jammy-base-0.1.105\":\n- \"run-jammy-base-0.1.105/**\""
+          "filters": "\"builder-jammy-base-0.4.278\":\n- \"builder-jammy-base-0.4.278/**\"\n\"docker--25\":\n- \"./init/docker--25/**\"\n\"docker-25\":\n- \"docker-25/**\"\n\"keycloak-23.0\":\n- \"keycloak-23.0/**\"\n\"keycloak__keycloak--23.0\":\n- \"./init/keycloak__keycloak--23.0/**\"\n\"minio-release_2024-04-06T05-26-02Z\":\n- \"minio-release_2024-04-06T05-26-02Z/**\"\n\"minio__minio--release_2024-04-06T05-26-02Z\":\n- \"./init/minio__minio--release_2024-04-06T05-26-02Z/**\"\n\"paketobuildpacks__builder-jammy-base--0.4.278\":\n- \"./init/paketobuildpacks__builder-jammy-base--0.4.278/**\"\n\"paketobuildpacks__run-jammy-base--0.1.105\":\n- \"./init/paketobuildpacks__run-jammy-base--0.1.105/**\"\n\"postgres--12-alpine\":\n- \"./init/postgres--12-alpine/**\"\n\"postgres-12-alpine\":\n- \"postgres-12-alpine/**\"\n\"run-jammy-base-0.1.105\":\n- \"run-jammy-base-0.1.105/**\""
   "docker--25":
     "env":
       "IMAGE": "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/docker--25:latest"
@@ -105,34 +105,34 @@
       - "run": "echo keycloak__keycloak--23.0"
       - "run": "docker build --build-arg DOCKER_REPO_URL --build-arg CI_PROJECT_NAME -t $IMAGE ./init/$SERVICE_NAME"
       - "run": "docker push $IMAGE"
-  "minio-release_2024-02-24t17-11-14z":
+  "minio-release_2024-04-06T05-26-02Z":
     "env":
-      "IMAGE": "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/minio-release_2024-02-24t17-11-14z:latest"
-      "SERVICE_NAME": "minio-release_2024-02-24t17-11-14z"
-    "if": "${{ github.event.inputs.build == 'minio-release_2024-02-24t17-11-14z' || ('needs.changes.outputs.minio-release_2024-02-24t17-11-14z' == 'true' || 'needs.changes.outputs.minio__minio--release_2024-02-24t17-11-14z' == 'true') || ( github.event.inputs.build == 'minio__minio--release_2024-02-24t17-11-14z' ) && always() }}"
+      "IMAGE": "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/minio-release_2024-04-06T05-26-02Z:latest"
+      "SERVICE_NAME": "minio-release_2024-04-06T05-26-02Z"
+    "if": "${{ github.event.inputs.build == 'minio-release_2024-04-06T05-26-02Z' || ('needs.changes.outputs.minio-release_2024-04-06T05-26-02Z' == 'true' || 'needs.changes.outputs.minio__minio--release_2024-04-06T05-26-02Z' == 'true') || ( github.event.inputs.build == 'minio__minio--release_2024-04-06T05-26-02Z' ) && always() }}"
     "needs":
       - "changes"
-      - "minio__minio--release_2024-02-24t17-11-14z"
+      - "minio__minio--release_2024-04-06T05-26-02Z"
     "runs-on":
       - "self-hosted"
     "steps":
       - "uses": "actions/checkout@v3"
       - "run": "echo $DOCKER_REPO_PASSWORD | docker login $DOCKER_REPO_URL_LOGIN -u $DOCKER_REPO_USERNAME --password-stdin"
-      - "run": "echo minio-release_2024-02-24t17-11-14z"
+      - "run": "echo minio-release_2024-04-06T05-26-02Z"
       - "run": "docker build --build-arg DOCKER_REPO_URL --build-arg CI_PROJECT_NAME -t $IMAGE ./$SERVICE_NAME"
       - "run": "docker push $IMAGE"
-  "minio__minio--release_2024-02-24t17-11-14z":
+  "minio__minio--release_2024-04-06T05-26-02Z":
     "env":
-      "IMAGE": "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/minio__minio--release_2024-02-24t17-11-14z:latest"
-      "SERVICE_NAME": "minio__minio--release_2024-02-24t17-11-14z"
-    "if": "${{ github.event.inputs.build == 'minio__minio--release_2024-02-24t17-11-14z' || 'needs.changes.outputs.minio__minio--release_2024-02-24t17-11-14z' == 'true' && always() }}"
+      "IMAGE": "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/minio__minio--release_2024-04-06T05-26-02Z:latest"
+      "SERVICE_NAME": "minio__minio--release_2024-04-06T05-26-02Z"
+    "if": "${{ github.event.inputs.build == 'minio__minio--release_2024-04-06T05-26-02Z' || 'needs.changes.outputs.minio__minio--release_2024-04-06T05-26-02Z' == 'true' && always() }}"
     "needs": "changes"
     "runs-on":
       - "self-hosted"
     "steps":
       - "uses": "actions/checkout@v3"
       - "run": "echo $DOCKER_REPO_PASSWORD | docker login $DOCKER_REPO_URL_LOGIN -u $DOCKER_REPO_USERNAME --password-stdin"
-      - "run": "echo minio__minio--release_2024-02-24t17-11-14z"
+      - "run": "echo minio__minio--release_2024-04-06T05-26-02Z"
       - "run": "docker build --build-arg DOCKER_REPO_URL --build-arg CI_PROJECT_NAME -t $IMAGE ./init/$SERVICE_NAME"
       - "run": "docker push $IMAGE"
   "paketobuildpacks__builder-jammy-base--0_4_278":
@@ -223,14 +223,14 @@
         "description": "Who to build"
         "options":
           - "docker-25"
-          - "minio-release_2024-02-24t17-11-14z"
+          - "minio-release_2024-04-06T05-26-02Z"
           - "postgres-12-alpine"
           - "builder-jammy-base-0.4.278"
           - "run-jammy-base-0.1.105"
           - "keycloak-23.0"
           - "docker--25"
           - "keycloak__keycloak--23.0"
-          - "minio__minio--release_2024-02-24t17-11-14z"
+          - "minio__minio--release_2024-04-06T05-26-02Z"
           - "paketobuildpacks__builder-jammy-base--0.4.278"
           - "paketobuildpacks__run-jammy-base--0.1.105"
           - "postgres--12-alpine"
