@@ -133,7 +133,7 @@ jobs : {
     [std.strReplace(service.name, ".", "_")]: {
       "runs-on": [ "self-hosted" ],
       needs:  [ "changes" ] + std.map(function(x) std.strReplace(x, ".", "_"), service.dependsOn),
-      "if": std.format("${{ github.event.inputs.build == '%s' || ('needs.changes.outputs.%s' == 'true'%s) || (%s) && always() }}", [service.name, service.name, arrayToString(service.dependsOn), arrayToString2(service.dependsOn)]),
+      "if": std.format("${{ github.event.inputs.build == '%s' || (needs.changes.outputs.%s == 'true'%s) || (%s) && always() }}", [service.name, service.name, arrayToString(service.dependsOn), arrayToString2(service.dependsOn)]),
       env: {
         SERVICE_NAME: service.name,
         IMAGE: "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/" + service.name + ":latest"
