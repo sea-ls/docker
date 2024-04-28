@@ -64,7 +64,7 @@
     "env":
       "IMAGE": "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/docker-25:latest"
       "SERVICE_NAME": "docker-25"
-    "if": "${{ github.event.inputs.build == 'docker-25' || (needs.changes.outputs.docker-25 == 'true' || needs.changes.outputs.docker--25 == 'true') || ( github.event.inputs.build == 'docker--25' ) && always() }}"
+    "if": "${{ github.event.inputs.build == 'docker-25' || needs.changes.outputs.docker-25 == 'true' || needs.changes.outputs.docker--25 == 'true' || github.event.inputs.build == 'docker--25' && always() }}"
     "needs":
       - "changes"
       - "docker--25"
