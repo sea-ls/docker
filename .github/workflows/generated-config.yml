@@ -26,7 +26,7 @@
     "outputs":
       "builder-jammy-base-0.4.278": "${{ 'steps.filter.outputs.builder-jammy-base-0.4.278' }}"
       "docker--25": "${{ 'steps.filter.outputs.docker--25' }}"
-      "docker-25": "${{ 'steps.filter.outputs.docker-25' }}"
+      "docker-25": "${{ steps.filter.outputs.docker-25 }}"
       "keycloak-23.0": "${{ 'steps.filter.outputs.keycloak-23.0' }}"
       "keycloak__keycloak--23.0": "${{ 'steps.filter.outputs.keycloak__keycloak--23.0' }}"
       "minio-release_2024-04-06t05-26-02z": "${{ 'steps.filter.outputs.minio-release_2024-04-06t05-26-02z' }}"
