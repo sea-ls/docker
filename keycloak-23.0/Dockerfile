@@ -6,4 +6,4 @@ FROM ${docker_repo_url}${base_project_name}/keycloak__keycloak--23.0
 
 COPY entrypoint_overwrited.sh /data/entrypoint_overwrited.sh
 
-ENTRYPOINT ["/data/entrypoint_overwrited.sh", "/opt/keycloak/bin/kc.sh"]
+ENTRYPOINT ["/opt/keycloak/bin/kc.sh"]
