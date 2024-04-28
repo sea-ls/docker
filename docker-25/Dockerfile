@@ -10,6 +10,3 @@ RUN apk --no-cache add -U jsonnet \
       && apk add --no-cache git \
       && apk add --no-cache bash \
       && apk add --no-cache git-flow
-
-
-
