@@ -5,3 +5,5 @@ ARG base_project_name=$CI_PROJECT_NAME
 FROM ${docker_repo_url}${base_project_name}/keycloak__keycloak--23.0
 
 ADD entrypoint_overwrited.sh /data/entrypoint_overwrited.sh
+
+ENTRYPOINT ["/data/entrypoint_overwrited.sh", "/opt/keycloak/bin/kc.sh"]
