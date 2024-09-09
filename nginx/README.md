@@ -1,0 +1,1 @@
+# Образ nginx stable-alpine3.20
