@@ -31,6 +31,8 @@
       "keycloak__keycloak--23.0": "${{ 'steps.filter.outputs.keycloak__keycloak--23.0' }}"
       "minio-release_2024-04-06t05-26-02z": "${{ 'steps.filter.outputs.minio-release_2024-04-06t05-26-02z' }}"
       "minio__minio--release_2024-04-06t05-26-02z": "${{ 'steps.filter.outputs.minio__minio--release_2024-04-06t05-26-02z' }}"
+      "nginx--stable-alpine3.20": "${{ 'steps.filter.outputs.nginx--stable-alpine3.20' }}"
+      "nginx-stable-alpine3.20": "${{ 'steps.filter.outputs.nginx-stable-alpine3.20' }}"
       "paketobuildpacks__builder-jammy-base--0.4.278": "${{ 'steps.filter.outputs.paketobuildpacks__builder-jammy-base--0.4.278' }}"
       "paketobuildpacks__run-jammy-base--0.1.105": "${{ 'steps.filter.outputs.paketobuildpacks__run-jammy-base--0.1.105' }}"
       "postgres--12-alpine": "${{ 'steps.filter.outputs.postgres--12-alpine' }}"
@@ -45,7 +47,7 @@
       - "id": "filter"
         "uses": "dorny/paths-filter@v2"
         "with":
-          "filters": "\"builder-jammy-base-0.4.278\":\n- \"builder-jammy-base-0.4.278/**\"\n\"docker--25\":\n- \"./init/docker--25/**\"\n\"docker-25\":\n- \"docker-25/**\"\n\"keycloak-23.0\":\n- \"keycloak-23.0/**\"\n\"keycloak__keycloak--23.0\":\n- \"./init/keycloak__keycloak--23.0/**\"\n\"minio-release_2024-04-06t05-26-02z\":\n- \"minio-release_2024-04-06t05-26-02z/**\"\n\"minio__minio--release_2024-04-06t05-26-02z\":\n- \"./init/minio__minio--release_2024-04-06t05-26-02z/**\"\n\"paketobuildpacks__builder-jammy-base--0.4.278\":\n- \"./init/paketobuildpacks__builder-jammy-base--0.4.278/**\"\n\"paketobuildpacks__run-jammy-base--0.1.105\":\n- \"./init/paketobuildpacks__run-jammy-base--0.1.105/**\"\n\"postgres--12-alpine\":\n- \"./init/postgres--12-alpine/**\"\n\"postgres-12-alpine\":\n- \"postgres-12-alpine/**\"\n\"run-jammy-base-0.1.105\":\n- \"run-jammy-base-0.1.105/**\""
+          "filters": "\"builder-jammy-base-0.4.278\":\n- \"builder-jammy-base-0.4.278/**\"\n\"docker--25\":\n- \"./init/docker--25/**\"\n\"docker-25\":\n- \"docker-25/**\"\n\"keycloak-23.0\":\n- \"keycloak-23.0/**\"\n\"keycloak__keycloak--23.0\":\n- \"./init/keycloak__keycloak--23.0/**\"\n\"minio-release_2024-04-06t05-26-02z\":\n- \"minio-release_2024-04-06t05-26-02z/**\"\n\"minio__minio--release_2024-04-06t05-26-02z\":\n- \"./init/minio__minio--release_2024-04-06t05-26-02z/**\"\n\"nginx--stable-alpine3.20\":\n- \"./init/nginx--stable-alpine3.20/**\"\n\"nginx-stable-alpine3.20\":\n- \"nginx-stable-alpine3.20/**\"\n\"paketobuildpacks__builder-jammy-base--0.4.278\":\n- \"./init/paketobuildpacks__builder-jammy-base--0.4.278/**\"\n\"paketobuildpacks__run-jammy-base--0.1.105\":\n- \"./init/paketobuildpacks__run-jammy-base--0.1.105/**\"\n\"postgres--12-alpine\":\n- \"./init/postgres--12-alpine/**\"\n\"postgres-12-alpine\":\n- \"postgres-12-alpine/**\"\n\"run-jammy-base-0.1.105\":\n- \"run-jammy-base-0.1.105/**\""
   "docker--25":
     "env":
       "IMAGE": "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/docker--25:latest"
@@ -135,6 +137,36 @@
       - "run": "echo $DOCKER_REPO_PASSWORD | docker login $DOCKER_REPO_URL_LOGIN -u $DOCKER_REPO_USERNAME --password-stdin"
       - "run": "echo minio__minio--release_2024-04-06t05-26-02z"
       - "run": "docker build --build-arg DOCKER_REPO_URL --build-arg CI_PROJECT_NAME -t $IMAGE ./init/$SERVICE_NAME"
+      - "run": "docker push $IMAGE"
+  "nginx--stable-alpine3_20":
+    "env":
+      "IMAGE": "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/nginx--stable-alpine3.20:latest"
+      "SERVICE_NAME": "nginx--stable-alpine3.20"
+    "if": "${{ github.event.inputs.build == 'nginx--stable-alpine3.20' || 'needs.changes.outputs.nginx--stable-alpine3.20' == 'true' && always() }}"
+    "needs": "changes"
+    "runs-on":
+      - "self-hosted"
+    "steps":
+      - "uses": "actions/checkout@v3"
+      - "run": "echo $DOCKER_REPO_PASSWORD | docker login $DOCKER_REPO_URL_LOGIN -u $DOCKER_REPO_USERNAME --password-stdin"
+      - "run": "echo nginx--stable-alpine3.20"
+      - "run": "docker build --build-arg DOCKER_REPO_URL --build-arg CI_PROJECT_NAME -t $IMAGE ./init/$SERVICE_NAME"
+      - "run": "docker push $IMAGE"
+  "nginx-stable-alpine3_20":
+    "env":
+      "IMAGE": "${{ vars.DOCKER_REPO_URL }}${{ github.event.repository.name }}/nginx-stable-alpine3.20:latest"
+      "SERVICE_NAME": "nginx-stable-alpine3.20"
+    "if": "${{ github.event.inputs.build == 'nginx-stable-alpine3.20' || ('needs.changes.outputs.nginx-stable-alpine3.20' == 'true' || 'needs.changes.outputs.nginx--stable-alpine3.20' == 'true') || ( github.event.inputs.build == 'nginx--stable-alpine3.20' ) && always() }}"
+    "needs":
+      - "changes"
+      - "nginx--stable-alpine3_20"
+    "runs-on":
+      - "self-hosted"
+    "steps":
+      - "uses": "actions/checkout@v3"
+      - "run": "echo $DOCKER_REPO_PASSWORD | docker login $DOCKER_REPO_URL_LOGIN -u $DOCKER_REPO_USERNAME --password-stdin"
+      - "run": "echo nginx-stable-alpine3.20"
+      - "run": "docker build --build-arg DOCKER_REPO_URL --build-arg CI_PROJECT_NAME -t $IMAGE ./$SERVICE_NAME"
       - "run": "docker push $IMAGE"
   "paketobuildpacks__builder-jammy-base--0_4_278":
     "env":
@@ -229,9 +261,11 @@
           - "builder-jammy-base-0.4.278"
           - "run-jammy-base-0.1.105"
           - "keycloak-23.0"
+          - "nginx-stable-alpine3.20"
           - "docker--25"
           - "keycloak__keycloak--23.0"
           - "minio__minio--release_2024-04-06t05-26-02z"
+          - "nginx--stable-alpine3.20"
           - "paketobuildpacks__builder-jammy-base--0.4.278"
           - "paketobuildpacks__run-jammy-base--0.1.105"
           - "postgres--12-alpine"
