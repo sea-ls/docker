@@ -5,6 +5,7 @@ local services = [
   { name: "builder-jammy-base-0.4.278", dependsOn: [ "paketobuildpacks__builder-jammy-base--0.4.278" ] },
   { name: "run-jammy-base-0.1.105", dependsOn: [ "paketobuildpacks__run-jammy-base--0.1.105" ] },
   { name: "keycloak-23.0", dependsOn: [ "keycloak__keycloak--23.0" ] },
+  { name: "nginx-stable-alpine3.20", dependsOn: [ "nginx--stable-alpine3.20" ] },
 ];
 
 local dependencies = std.set(std.flattenArrays([
