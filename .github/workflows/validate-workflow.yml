@@ -1,0 +1,42 @@
+name: Validate image workflow offline
+
+on:
+  pull_request:
+    branches: [main]
+    paths: ['.github/**']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: '20'
+      - name: Prepare pinned validation tools
+        shell: bash
+        run: |
+          set -euo pipefail
+          tool_dir="$RUNNER_TEMP/workflow-tools"
+          mkdir -p "$tool_dir"
+          curl --fail --location --silent --show-error \
+            https://github.com/google/go-jsonnet/releases/download/v0.22.0/go-jsonnet_0.22.0_linux_amd64.tar.gz \
+            --output "$tool_dir/jsonnet.tar.gz"
+          echo "e87a93ea44e34da92c15636205c7f2240bf3ac92d00ccb855dbb4e7e03ea6941  $tool_dir/jsonnet.tar.gz" | sha256sum --check --status
+          tar -xzf "$tool_dir/jsonnet.tar.gz" -C "$tool_dir" jsonnet
+          python3 -m venv "$tool_dir/python"
+          "$tool_dir/python/bin/pip" install --disable-pip-version-check PyYAML==6.0.3
+          npm install --prefix "$tool_dir" --ignore-scripts --no-audit --no-fund @actions/expressions@0.3.61
+          echo "JSONNET=$tool_dir/jsonnet" >> "$GITHUB_ENV"
+          echo "ACTIONS_EXPRESSIONS_MODULE=$tool_dir/node_modules/@actions/expressions/dist/index.js" >> "$GITHUB_ENV"
+          echo "WORKFLOW_PYTHON=$tool_dir/python/bin/python" >> "$GITHUB_ENV"
+      - name: Check generation and expression regressions
+        shell: bash
+        run: '"$WORKFLOW_PYTHON" .github/scripts/test-workflow.py'
